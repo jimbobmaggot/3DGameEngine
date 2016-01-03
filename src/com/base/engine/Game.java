@@ -21,7 +21,7 @@ public class Game
         };
 
         mesh.addVertices(data);
-        
+
         transform = new Transform();
 
         shader.addVertexShader(ResourceLoader.loadShader("basicVertex.vs"));
@@ -43,8 +43,11 @@ public class Game
     {
         temp += Time.getDelta();
 
-        transform.setTranslation((float) Math.sin(temp), 0, 0);
-        transform.setRotation(0, 0, (float) Math.sin(temp) * 180);
+        float sinTemp = (float) Math.sin(temp);
+
+        transform.setTranslation(sinTemp, 0, 0);
+        transform.setRotation(0, 0, sinTemp * 180);
+        transform.setScale(sinTemp, sinTemp, sinTemp);
     }
 
     public void render()

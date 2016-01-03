@@ -8,12 +8,14 @@ public class Transform
 {
 
     private Vector3f translation;
-    public Vector3f rotation;
+    private Vector3f rotation;
+    private Vector3f scale;
 
     public Transform()
     {
         translation = new Vector3f(0, 0, 0);
         rotation = new Vector3f(0, 0, 0);
+        scale = new Vector3f(1, 1, 1);
     }
 
     public Matrix4f getTransformation()
@@ -21,10 +23,19 @@ public class Transform
         Matrix4f translationMatrix = new Matrix4f().initTranslation(translation.getX(),
                                                                     translation.getY(),
                                                                     translation.getZ());
-        Matrix4f rotationMatrix = new Matrix4f().initRotation(rotation.getX(), rotation.getY(), rotation.getZ());
+        
+        Matrix4f rotationMatrix = new Matrix4f().initRotation(rotation.getX(), 
+                                                              rotation.getY(), 
+                                                              rotation.getZ());
+        
+        Matrix4f scaleMatrix = new Matrix4f().initScale(scale.getX(), 
+                                                        scale.getY(), 
+                                                        scale.getZ());
 
-        return translationMatrix.mul(rotationMatrix);
+        return translationMatrix.mul(rotationMatrix.mul(scaleMatrix));
     }
+    
+    // Getters
 
     /**
      * @return the translation
@@ -43,6 +54,16 @@ public class Transform
     }
 
     /**
+     * @return the scale
+     */
+    public Vector3f getScale()
+    {
+        return scale;
+    }
+    
+    // Setters
+
+    /**
      * @param translation
      */
     public void setTranslation(Vector3f translation)
@@ -56,7 +77,7 @@ public class Transform
     }
 
     /**
-     * @param rotation the rotation to set
+     * @param rotation
      */
     public void setRotation(Vector3f rotation)
     {
@@ -66,5 +87,18 @@ public class Transform
     public void setRotation(float x, float y, float z)
     {
         this.rotation = new Vector3f(x, y, z);
+    }
+    
+    /**
+     * @param scale
+     */
+    public void setScale(Vector3f scale)
+    {
+        this.scale = scale;
+    }
+    
+    public void setScale(float x, float y, float z)
+    {
+        this.scale = new Vector3f(x, y, z);
     }
 }
