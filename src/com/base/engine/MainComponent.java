@@ -1,108 +1,132 @@
 package com.base.engine;
 
-public class MainComponent {
+public class MainComponent
+{
 
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 600;
-	public static final String TITLE = "3D Engine";
-	public static final double FRAME_CAP = 5000.0;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
+    public static final String TITLE = "3D Engine";
+    public static final double FRAME_CAP = 5000.0;
 
-	private boolean isRunning;
-	private Game game;
+    private boolean isRunning;
+    private final Game game;
 
-	public MainComponent() {
-		System.out.println(RenderUtil.getOpenGLVersion());
-		RenderUtil.initGraphics();
-		isRunning = false;
-		game = new Game();
-	}
+    public MainComponent()
+    {
+        System.out.println(RenderUtil.getOpenGLVersion());
+        RenderUtil.initGraphics();
+        isRunning = false;
+        game = new Game();
+    }
 
-	public void start() {
-		if (isRunning)
-			return;
-		
-		run();
-	}
+    public void start()
+    {
+        if (isRunning)
+        {
+            return;
+        }
 
-	public void stop() {
-		if (!isRunning)
-			return;
-		isRunning = false;
-	}
+        run();
+    }
 
-	private void run() {
-		isRunning = true;
+    public void stop()
+    {
+        if (!isRunning)
+        {
+            return;
+        }
+        isRunning = false;
+    }
 
-		int frames = 0;
-		long frameCounter = 0;
+    private void run()
+    {
+        isRunning = true;
 
-		final double frameTime = 1.0 / FRAME_CAP;
+        int frames = 0;
+        long frameCounter = 0;
 
-		long lastTime = Time.getTime();
-		double unprocessedTime = 0;
+        final double frameTime = 1.0 / FRAME_CAP;
 
-		while (isRunning) {
-			boolean render = false;
+        long lastTime = Time.getTime();
+        double unprocessedTime = 0;
 
-			long startTime = Time.getTime();
-			long passedTime = startTime - lastTime;
-			lastTime = startTime;
+        while (isRunning)
+        {
+            boolean render = false;
 
-			unprocessedTime += passedTime / (double) Time.SECOND;
-			frameCounter += passedTime;
+            long startTime = Time.getTime();
+            long passedTime = startTime - lastTime;
+            lastTime = startTime;
 
-			while (unprocessedTime > frameTime) {
-				render = true;
+            unprocessedTime += passedTime / (double) Time.SECOND;
+            frameCounter += passedTime;
 
-				unprocessedTime -= frameTime;
+            while (unprocessedTime > frameTime)
+            {
+                render = true;
 
-				if (Window.isCloseRequested())
-					stop();
+                unprocessedTime -= frameTime;
 
-				Time.setDelta(frameTime);
-				Input.update();
+                if (Window.isCloseRequested())
+                {
+                    stop();
+                }
 
-				game.input();
-				Input.update();
+                Time.setDelta(frameTime);
+                Input.update();
 
-				game.update();
+                game.input();
+                Input.update();
 
-				if (frameCounter >= Time.SECOND) {
-					System.out.println(frames);
-					frames = 0;
-					frameCounter = 0;
-				}
-			}
-			if (render) {
-				render();
-				frames++;
-			} else
-				try {
-					Thread.sleep(1);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		}
-		cleanUp();
-	}
+                game.update();
 
-	private void render() {
-		RenderUtil.clearScrean();
-		game.render();
-		Window.render();
-	}
+                if (frameCounter >= Time.SECOND)
+                {
+                    System.out.println(frames);
+                    frames = 0;
+                    frameCounter = 0;
+                }
+            }
+            if (render)
+            {
+                render();
+                frames++;
+            }
+            else
+            {
+                try
+                {
+                    Thread.sleep(1);
+                }
+                catch (InterruptedException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        cleanUp();
+    }
 
-	private void cleanUp() {
-		Window.dispose();
-	}
+    private void render()
+    {
+        RenderUtil.clearScrean();
+        game.render();
+        Window.render();
+    }
 
-	public static void main(String[] args) {
-		Window.createWindow(WIDTH, HEIGHT, TITLE);
+    private void cleanUp()
+    {
+        Window.dispose();
+    }
 
-		MainComponent game = new MainComponent();
+    public static void main(String[] args)
+    {
+        Window.createWindow(WIDTH, HEIGHT, TITLE);
 
-		game.start();
+        MainComponent game = new MainComponent();
 
-	}
+        game.start();
+
+    }
 }

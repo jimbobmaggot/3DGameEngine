@@ -1,28 +1,31 @@
 package com.base.engine;
 
-public class Vertex {
-	
-	public static final int SIZE = 3;
+public class Vertex
+{
 
-	private Vector3f pos;
+    public static final int SIZE = 3;
 
-	public Vertex(Vector3f pos) {
-		this.pos = pos;
-	}
+    private Vector3f pos;
 
-	/**
-	 * @return the pos
-	 */
-	public Vector3f getPos() {
-		return pos;
-	}
+    public Vertex(Vector3f pos)
+    {
+        this.pos = pos;
+    }
 
-	/**
-	 * @param Vector3f
-	 *            pos
-	 */
-	public void setPos(Vector3f pos) {
-		this.pos = pos;
-	}
+    /**
+     * @return the pos
+     */
+    public Vector3f getPos()
+    {
+        return pos;
+    }
+
+    /**
+     * @param pos
+     */
+    public void setPos(Vector3f pos)
+    {
+        this.pos = pos;
+    }
 
 }

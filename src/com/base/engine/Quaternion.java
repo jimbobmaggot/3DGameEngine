@@ -1,115 +1,129 @@
 package com.base.engine;
 
-public class Quaternion {
-	private float x;
-	private float y;
-	private float z;
-	private float w;
+public class Quaternion
+{
 
-	public Quaternion(float x, float y, float z, float w) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.w = w;
-	}
+    private float x;
+    private float y;
+    private float z;
+    private float w;
 
-	public float length() {
-		return (float) Math.sqrt(x * x + y * y + z * z + w * w);
-	}
+    public Quaternion(float x, float y, float z, float w)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
+    }
 
-	public Quaternion normalize() {
-		float length = length();
+    public float length()
+    {
+        return (float) Math.sqrt(x * x + y * y + z * z + w * w);
+    }
 
-		x /= length;
-		y /= length;
-		z /= length;
-		w /= length;
+    public Quaternion normalize()
+    {
+        float length = length();
 
-		return this;
-	}
+        x /= length;
+        y /= length;
+        z /= length;
+        w /= length;
 
-	public Quaternion conjugate() {
-		return new Quaternion(-x, -y, -z, w);
-	}
+        return this;
+    }
 
-	// Multiplication
-	public Quaternion mul(Quaternion r) {
+    public Quaternion conjugate()
+    {
+        return new Quaternion(-x, -y, -z, w);
+    }
 
-		float w_ = w * r.getW() - x * r.getX() - y * r.getY() + z * r.getZ();
-		float x_ = x * r.getW() + w * r.getX() + y * r.getZ() - z * r.getY();
-		float y_ = y * r.getW() + w * r.getY() + z * r.getX() - x * r.getZ();
-		float z_ = z * r.getW() + w * r.getZ() + x * r.getY() - y * r.getX();
+    // Multiplication
+    public Quaternion mul(Quaternion r)
+    {
 
-		return new Quaternion(x_, y_, z_, w_);
-	}
+        float w_ = w * r.getW() - x * r.getX() - y * r.getY() + z * r.getZ();
+        float x_ = x * r.getW() + w * r.getX() + y * r.getZ() - z * r.getY();
+        float y_ = y * r.getW() + w * r.getY() + z * r.getX() - x * r.getZ();
+        float z_ = z * r.getW() + w * r.getZ() + x * r.getY() - y * r.getX();
 
-	public Quaternion mul(Vector3f r) {
+        return new Quaternion(x_, y_, z_, w_);
+    }
 
-		float w_ = -x * r.getX() - y * r.getY() - z * r.getZ();
-		float x_ =  w * r.getX() + y * r.getZ() - z * r.getY();
-		float y_ =  w * r.getY() + z * r.getX() - x * r.getZ();
-		float z_ =  w * r.getZ() + x * r.getY() - y * r.getX();
+    public Quaternion mul(Vector3f r)
+    {
 
-		return new Quaternion(x_, y_, z_, w_);
-	}
+        float w_ = -x * r.getX() - y * r.getY() - z * r.getZ();
+        float x_ = w * r.getX() + y * r.getZ() - z * r.getY();
+        float y_ = w * r.getY() + z * r.getX() - x * r.getZ();
+        float z_ = w * r.getZ() + x * r.getY() - y * r.getX();
 
-	// Getters
+        return new Quaternion(x_, y_, z_, w_);
+    }
 
-	/**
-	 * @return the x
-	 */
-	public float getX() {
-		return x;
-	}
+    // Getters
+    /**
+     * @return the x
+     */
+    public float getX()
+    {
+        return x;
+    }
 
-	/**
-	 * @return the y
-	 */
-	public float getY() {
-		return y;
-	}
+    /**
+     * @return the y
+     */
+    public float getY()
+    {
+        return y;
+    }
 
-	/**
-	 * @return the z
-	 */
-	public float getZ() {
-		return z;
-	}
+    /**
+     * @return the z
+     */
+    public float getZ()
+    {
+        return z;
+    }
 
-	/**
-	 * @return the w
-	 */
-	public float getW() {
-		return w;
-	}
+    /**
+     * @return the w
+     */
+    public float getW()
+    {
+        return w;
+    }
 
-	// Setters
+    // Setters
+    /**
+     * @param x
+     */
+    public void setX(float x)
+    {
+        this.x = x;
+    }
 
-	/**
-	 * @param x
-	 */
-	public void setX(float x) {
-		this.x = x;
-	}
+    /**
+     * @param y
+     */
+    public void setY(float y)
+    {
+        this.y = y;
+    }
 
-	/**
-	 * @param y
-	 */
-	public void setY(float y) {
-		this.y = y;
-	}
+    /**
+     * @param z
+     */
+    public void setZ(float z)
+    {
+        this.z = z;
+    }
 
-	/**
-	 * @param z
-	 */
-	public void setZ(float z) {
-		this.z = z;
-	}
-
-	/**
-	 * @param w
-	 */
-	public void setW(float w) {
-		this.w = w;
-	}
+    /**
+     * @param w
+     */
+    public void setW(float w)
+    {
+        this.w = w;
+    }
 }

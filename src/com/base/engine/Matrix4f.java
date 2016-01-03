@@ -1,52 +1,62 @@
 package com.base.engine;
 
-public class Matrix4f {
-	
-	private float[][] m;
+public class Matrix4f
+{
 
-	public Matrix4f() {
-		m = new float[4][4];
-	}
-	
-	public Matrix4f initIdentity() {
-		m[0][0] = 1;	m[0][1] = 0;	m[0][2] = 0;	m[0][3] = 0;
-		m[1][0] = 0;	m[1][1] = 1;	m[1][2] = 0;	m[1][3] = 0;
-		m[2][0] = 0;	m[2][1] = 0;	m[2][2] = 1;	m[2][3] = 0;
-		m[3][0] = 0;	m[3][1] = 0;	m[3][2] = 0;	m[3][3] = 1;
-		
-		return this;
-	}
-	
-	public Matrix4f mul(Matrix4f r) {
-		Matrix4f res = new Matrix4f();
+    private float[][] m;
 
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				res.set(i, j, m[i][0] * r.get(0, j) +
-							  m[i][1] * r.get(1, j) +
-							  m[i][2] * r.get(2, j) +
-							  m[i][3] * r.get(3, j));
-			}
-		}
+    public Matrix4f()
+    {
+        m = new float[4][4];
+    }
 
-		return res;
-	}
+    public Matrix4f initIdentity()
+    {
+	m[0][0] = 1;	m[0][1] = 0;	m[0][2] = 0;	m[0][3] = 0;
+	m[1][0] = 0;	m[1][1] = 1;	m[1][2] = 0;	m[1][3] = 0;
+	m[2][0] = 0;	m[2][1] = 0;	m[2][2] = 1;	m[2][3] = 0;
+	m[3][0] = 0;	m[3][1] = 0;	m[3][2] = 0;	m[3][3] = 1;
 
-	// getters
-	public float[][] getM() {
-		return m;
-	}
+        return this;
+    }
 
-	public float get(int x, int y) {
-		return m[x][y];
-	}
+    public Matrix4f mul(Matrix4f r)
+    {
+        Matrix4f res = new Matrix4f();
 
-	// setters
-	public void setM(float[][] m) {
-		this.m = m;
-	}
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                res.set(i, j, m[i][0] * r.get(0, j)
+                            + m[i][1] * r.get(1, j)
+                            + m[i][2] * r.get(2, j)
+                            + m[i][3] * r.get(3, j));
+            }
+        }
 
-	public void set(int x, int y, float value) {
-		m[x][y] = value;
-	}
+        return res;
+    }
+
+    // getters
+    public float[][] getM()
+    {
+        return m;
+    }
+
+    public float get(int x, int y)
+    {
+        return m[x][y];
+    }
+
+    // setters
+    public void setM(float[][] m)
+    {
+        this.m = m;
+    }
+
+    public void set(int x, int y, float value)
+    {
+        m[x][y] = value;
+    }
 }
