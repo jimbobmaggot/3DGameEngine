@@ -2,6 +2,7 @@ package com.base.engine;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ResourceLoader
@@ -67,31 +68,38 @@ public class ResourceLoader
                 else if (tokens[0].equals("v"))
                 {
                     vertices.add(new Vertex(new Vector3f(Float.valueOf(tokens[1]),
-                                                         Float.valueOf(tokens[2]),
-                                                         Float.valueOf(tokens[3]))));
+                            Float.valueOf(tokens[2]),
+                            Float.valueOf(tokens[3]))));
                 }
-                else if(tokens[0].equals("f"))
+                else if (tokens[0].equals("f"))
                 {
-                    indices.add(Integer.parseInt(tokens[1]) - 1);
-                    indices.add(Integer.parseInt(tokens[2]) - 1);
-                    indices.add(Integer.parseInt(tokens[3]) - 1);
+                    indices.add(Integer.parseInt(tokens[1].split("/")[0]) - 1);
+                    indices.add(Integer.parseInt(tokens[2].split("/")[0]) - 1);
+                    indices.add(Integer.parseInt(tokens[3].split("/")[0]) - 1);
+
+                    if (tokens.length > 4)
+                    {
+                        indices.add(Integer.parseInt(tokens[1].split("/")[0]) - 1);
+                        indices.add(Integer.parseInt(tokens[3].split("/")[0]) - 1);
+                        indices.add(Integer.parseInt(tokens[4].split("/")[0]) - 1);
+                    }
                 }
             }
 
             meshReader.close();
-            
+
             Mesh res = new Mesh();
             Vertex[] vertexData = new Vertex[vertices.size()];
             vertices.toArray(vertexData);
-            
+
             Integer[] indexData = new Integer[indices.size()];
             indices.toArray(indexData);
-            
+
             res.addVertices(vertexData, Util.toIntArray(indexData));
-            
+
             return res;
         }
-        catch (Exception e)
+        catch (IOException | NumberFormatException e)
         {
             e.printStackTrace();
             System.exit(1);
@@ -99,5 +107,4 @@ public class ResourceLoader
 
         return null;
     }
-
 }

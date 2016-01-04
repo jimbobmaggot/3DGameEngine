@@ -38,11 +38,9 @@ public class Quaternion
         return new Quaternion(-x, -y, -z, w);
     }
 
-    // Multiplication
     public Quaternion mul(Quaternion r)
     {
-
-        float w_ = w * r.getW() - x * r.getX() - y * r.getY() + z * r.getZ();
+        float w_ = w * r.getW() - x * r.getX() - y * r.getY() - z * r.getZ();
         float x_ = x * r.getW() + w * r.getX() + y * r.getZ() - z * r.getY();
         float y_ = y * r.getW() + w * r.getY() + z * r.getX() - x * r.getZ();
         float z_ = z * r.getW() + w * r.getZ() + x * r.getY() - y * r.getX();
@@ -52,7 +50,6 @@ public class Quaternion
 
     public Quaternion mul(Vector3f r)
     {
-
         float w_ = -x * r.getX() - y * r.getY() - z * r.getZ();
         float x_ = w * r.getX() + y * r.getZ() - z * r.getY();
         float y_ = w * r.getY() + z * r.getX() - x * r.getZ();
@@ -60,68 +57,46 @@ public class Quaternion
 
         return new Quaternion(x_, y_, z_, w_);
     }
-
+    
     // Getters
-    /**
-     * @return the x
-     */
+
     public float getX()
     {
         return x;
     }
 
-    /**
-     * @return the y
-     */
     public float getY()
     {
         return y;
     }
 
-    /**
-     * @return the z
-     */
     public float getZ()
     {
         return z;
     }
 
-    /**
-     * @return the w
-     */
     public float getW()
     {
         return w;
     }
-
+    
     // Setters
-    /**
-     * @param x
-     */
+
     public void setX(float x)
     {
         this.x = x;
     }
 
-    /**
-     * @param y
-     */
     public void setY(float y)
     {
         this.y = y;
     }
 
-    /**
-     * @param z
-     */
     public void setZ(float z)
     {
         this.z = z;
     }
 
-    /**
-     * @param w
-     */
     public void setW(float w)
     {
         this.w = w;

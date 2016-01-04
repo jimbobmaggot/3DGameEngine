@@ -35,6 +35,7 @@ public class MainComponent
         {
             return;
         }
+
         isRunning = false;
     }
 
@@ -73,7 +74,6 @@ public class MainComponent
                 }
 
                 Time.setDelta(frameTime);
-                Input.update();
 
                 game.input();
                 Input.update();
@@ -100,17 +100,17 @@ public class MainComponent
                 }
                 catch (InterruptedException e)
                 {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
         }
+
         cleanUp();
     }
 
     private void render()
     {
-        RenderUtil.clearScrean();
+        RenderUtil.clearScreen();
         game.render();
         Window.render();
     }
@@ -127,6 +127,5 @@ public class MainComponent
         MainComponent game = new MainComponent();
 
         game.start();
-
     }
 }

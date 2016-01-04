@@ -52,7 +52,7 @@ public class Vector2f
         return new Vector2f(x + r, y + r);
     }
 
-    // subtract
+    // subract
     public Vector2f sub(Vector2f r)
     {
         return new Vector2f(x - r.getX(), y - r.getY());
@@ -80,30 +80,31 @@ public class Vector2f
         return new Vector2f(x / r.getX(), y / r.getY());
     }
 
-    public Vector2f dib(float r)
+    public Vector2f div(float r)
     {
         return new Vector2f(x / r, y / r);
     }
 
-    // print
     @Override
     public String toString()
     {
         return "(" + x + " " + y + ")";
     }
+    
+    // Getters
 
-    // get
     public float getX()
     {
         return x;
     }
-
+    
     public float getY()
     {
         return y;
     }
+    
+    // Setters
 
-    // set
     public void setX(float x)
     {
         this.x = x;

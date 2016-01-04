@@ -6,9 +6,9 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class Mesh
 {
-    
-    private int vbo;		// pointer/handle
-    private int ibo;            // index buffer object
+
+    private final int vbo;	// pointer/handle
+    private final int ibo;      // index buffer object
     private int size;		// size/amounts of data
 
     public Mesh()
@@ -24,7 +24,7 @@ public class Mesh
 
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, Util.createFlippedBuffer(vertices), GL_STATIC_DRAW);
-        
+
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, Util.createFlippedBuffer(indices), GL_STATIC_DRAW);
     }
@@ -33,14 +33,13 @@ public class Mesh
     {
         //GL20 feature
         glEnableVertexAttribArray(0);
-        
+
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
-        
+
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
         glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 
         glDisableVertexAttribArray(0);
     }
-
 }

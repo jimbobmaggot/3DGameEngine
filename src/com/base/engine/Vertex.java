@@ -12,20 +12,13 @@ public class Vertex
         this.pos = pos;
     }
 
-    /**
-     * @return the pos
-     */
     public Vector3f getPos()
     {
         return pos;
     }
 
-    /**
-     * @param pos
-     */
     public void setPos(Vector3f pos)
     {
         this.pos = pos;
     }
-
 }

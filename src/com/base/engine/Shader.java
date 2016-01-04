@@ -18,8 +18,8 @@ public class Shader
 
         if (program == 0)
         {
-            System.err.println("Shader creation failed: "
-                    + "could not find valid memory location in constructor");
+            System.err.println("Shader creation failed:"
+                    + "Could not find valid memory location in constructor");
             System.exit(1);
         }
     }
@@ -62,38 +62,36 @@ public class Shader
     {
         glLinkProgram(program);
 
-        if (glGetProgrami(program, GL_LINK_STATUS) == 0)
+        if (glGetProgram(program, GL_LINK_STATUS) == 0)
         {
-            System.err.println(glGetShaderInfoLog(program, 1024));
+            System.err.println(glGetProgramInfoLog(program, 1024));
             System.exit(1);
         }
 
         glValidateProgram(program);
 
-        if (glGetProgrami(program, GL_VALIDATE_STATUS) == 0)
+        if (glGetProgram(program, GL_VALIDATE_STATUS) == 0)
         {
-            System.err.println(glGetShaderInfoLog(program, 1024));
+            System.err.println(glGetProgramInfoLog(program, 1024));
             System.exit(1);
         }
-
     }
 
     private void addProgram(String text, int type)
     {
-
         int shader = glCreateShader(type);
 
         if (shader == 0)
         {
-            System.err.println("Shader creation failed: "
-                    + "could not find valid memory location when adding shader");
+            System.err.println("Shader creation failed:"
+                    + "Could not find valid memory location when adding shader");
             System.exit(1);
         }
 
         glShaderSource(shader, text);
         glCompileShader(shader);
 
-        if (glGetShaderi(shader, GL_COMPILE_STATUS) == 0)
+        if (glGetShader(shader, GL_COMPILE_STATUS) == 0)
         {
             System.err.println(glGetShaderInfoLog(shader, 1024));
             System.exit(1);
@@ -117,7 +115,7 @@ public class Shader
         glUniform3f(uniforms.get(uniformName), value.getX(), value.getY(), value.getZ());
     }
 
-    public void setUniformi(String uniformName, Matrix4f value)
+    public void setUniform(String uniformName, Matrix4f value)
     {
         glUniformMatrix4(uniforms.get(uniformName), true, Util.createFlippedBuffer(value));
     }

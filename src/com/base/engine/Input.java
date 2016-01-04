@@ -1,5 +1,7 @@
 package com.base.engine;
 
+import java.util.ArrayList;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -125,9 +127,7 @@ public class Input
     public static final int KEY_YEN = 0x7D;
     /* (Japanese keyboard) */
     public static final int KEY_NUMPADEQUALS = 0x8D;
-    /*
-     * = on numeric keypad (NEC * PC98)
-     */
+    /* = on numeric keypad (NEC PC98) */
     public static final int KEY_CIRCUMFLEX = 0x90;
     /* (Japanese keyboard) */
     public static final int KEY_AT = 0x91;
@@ -145,14 +145,10 @@ public class Input
     public static final int KEY_UNLABELED = 0x97;
     /* (J3100) */
     public static final int KEY_NUMPADENTER = 0x9C;
-    /*
-     * Enter on numeric keypad
-     */
+    /* Enter on numeric keypad */
     public static final int KEY_RCONTROL = 0x9D;
     public static final int KEY_NUMPADCOMMA = 0xB3;
-    /*
-     * , on numeric keypad (NEC * PC98)
-     */
+    /* , on numeric keypad (NEC PC98) */
     public static final int KEY_DIVIDE = 0xB5;
     /* / on numeric keypad */
     public static final int KEY_SYSRQ = 0xB7;
@@ -195,19 +191,29 @@ public class Input
     public static final int KEY_POWER = 0xDE;
     public static final int KEY_SLEEP = 0xDF;
 
-    private static boolean[] m_lastKeys = new boolean[NUM_KEYCODES];
-    private static boolean[] m_lastMouse = new boolean[NUM_MOUSEBUTTONS];
+    private static final ArrayList<Integer> lastKeys = new ArrayList<>();
+    private static final ArrayList<Integer> lastMouse = new ArrayList<>();
 
     public static void update()
     {
+        lastKeys.clear();
+
         for (int i = 0; i < NUM_KEYCODES; i++)
         {
-            m_lastKeys[i] = getKey(i);
+            if (getKey(i))
+            {
+                lastKeys.add(i);
+            }
         }
+
+        lastMouse.clear();
 
         for (int i = 0; i < NUM_MOUSEBUTTONS; i++)
         {
-            m_lastMouse[i] = getMouse(i);
+            if (getMouse(i))
+            {
+                lastMouse.add(i);
+            }
         }
     }
 
@@ -218,12 +224,12 @@ public class Input
 
     public static boolean getKeyDown(int keyCode)
     {
-        return getKey(keyCode) && !m_lastKeys[keyCode];
+        return getKey(keyCode) && !lastKeys.contains(keyCode);
     }
 
     public static boolean getKeyUp(int keyCode)
     {
-        return !getKey(keyCode) && m_lastKeys[keyCode];
+        return !getKey(keyCode) && lastKeys.contains(keyCode);
     }
 
     public static boolean getMouse(int mouseButton)
@@ -233,26 +239,16 @@ public class Input
 
     public static boolean getMouseDown(int mouseButton)
     {
-        return getMouse(mouseButton) && !m_lastMouse[mouseButton];
+        return getMouse(mouseButton) && !lastMouse.contains(mouseButton);
     }
 
     public static boolean getMouseUp(int mouseButton)
     {
-        return !getMouse(mouseButton) && m_lastMouse[mouseButton];
+        return !getMouse(mouseButton) && lastMouse.contains(mouseButton);
     }
 
     public static Vector2f getMousePosition()
     {
         return new Vector2f(Mouse.getX(), Mouse.getY());
-    }
-
-    public static void getMousePosition(Vector2f pos)
-    {
-        Mouse.setCursorPosition((int) pos.getX(), (int) pos.getY());
-    }
-
-    public static void getCursor(boolean enabled)
-    {
-        Mouse.setGrabbed(!enabled);
     }
 }

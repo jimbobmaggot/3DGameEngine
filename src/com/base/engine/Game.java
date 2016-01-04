@@ -6,13 +6,14 @@ public class Game
     private final Mesh mesh;
     private final Shader shader;
     private final Transform transform;
+    private final Camera camera;
 
     public Game()
     {
-
         // mesh = ResourceLoader.loadMesh("monkey.obj"); //new Mesh();
         mesh = ResourceLoader.loadMesh("cube.obj");   //new Mesh();
         shader = new Shader();
+        camera = new Camera();
 
 //        Vertex[] vertices = new Vertex[]
 //        {
@@ -33,21 +34,20 @@ public class Game
 //
 //      mesh.addVertices(vertices, indices);
 
+        Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
+        Transform.setCamera(camera);
         transform = new Transform();
-        transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
 
         shader.addVertexShader(ResourceLoader.loadShader("basicVertex.vs"));
         shader.addFragmentShader(ResourceLoader.loadShader("basicFragment.fs"));
         shader.compileShader();
 
-        shader.addUniform(
-                "transform");
-
+        shader.addUniform("transform");
     }
 
     public void input()
     {
-
+        camera.input();
     }
 
     float temp = 0.0f;
@@ -66,10 +66,8 @@ public class Game
 
     public void render()
     {
-
         shader.bind();
-        shader.setUniformi("transform", transform.getProjectedTransformation());
+        shader.setUniform("transform", transform.getProjectedTransformation());
         mesh.draw();
-
     }
 }

@@ -24,6 +24,7 @@ public class Util
         IntBuffer buffer = createIntBuffer(values.length);
         buffer.put(values);
         buffer.flip();
+
         return buffer;
     }
 
@@ -54,7 +55,9 @@ public class Util
                 buffer.put(value.get(i, j));
             }
         }
+
         buffer.flip();
+
         return buffer;
     }
 
@@ -74,7 +77,6 @@ public class Util
         result.toArray(res);
 
         return res;
-
     }
 
     public static int[] toIntArray(Integer[] data)
@@ -85,7 +87,7 @@ public class Util
         {
             result[i] = data[i].intValue();
         }
+
         return result;
     }
-
 }
