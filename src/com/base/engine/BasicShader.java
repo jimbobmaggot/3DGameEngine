@@ -8,7 +8,7 @@ public class BasicShader extends Shader
 {
     private static final BasicShader instance = new BasicShader();
     
-    public BasicShader getinstance()
+    public static BasicShader getInstance()
     {
         return instance;
     }
