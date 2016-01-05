@@ -23,6 +23,16 @@ public class RenderUtil
             glDisable(GL_TEXTURE_2D);
         }
     }
+    
+    public static void unbindTextures()
+    {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    public static void setClearColor(Vector3f color)
+    {
+        glClearColor(color.getX(), color.getY(), color.getZ(), 1.0f);
+    }
 
     public static void initGraphics()
     {
@@ -37,7 +47,6 @@ public class RenderUtil
         glEnable(GL_DEPTH_TEST);
 
         // TODO: Depth clamp for later
-        
         glEnable(GL_TEXTURE_2D);
         // gamma correction (GL30 feature)
         glEnable(GL_FRAMEBUFFER_SRGB);

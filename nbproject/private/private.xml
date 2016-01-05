@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Programming/Java/3DGameEngine/res/shaders/basicFragment.fs</file>
+            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/Game.java</file>
+            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/Mesh.java</file>
+            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/Texture.java</file>
+            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/ResourceLoader.java</file>
+            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/Util.java</file>
+            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/Vertex.java</file>
+            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/RenderUtil.java</file>
+            <file>file:/C:/Programming/Java/3DGameEngine/res/shaders/basicVertex.vs</file>
+        </group>
     </open-files>
 </project-private>
