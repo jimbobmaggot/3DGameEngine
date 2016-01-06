@@ -1,7 +1,7 @@
 package com.base.engine;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL32.*;
 
 public class RenderUtil
 {
@@ -45,11 +45,10 @@ public class RenderUtil
         glEnable(GL_CULL_FACE);
         // Render closer objects on top
         glEnable(GL_DEPTH_TEST);
-
-        // TODO: Depth clamp for later
+        // Prevents Camera from clipping through mesh
+        glEnable(GL_DEPTH_CLAMP);
+        
         glEnable(GL_TEXTURE_2D);
-        // gamma correction (GL30 feature)
-        glEnable(GL_FRAMEBUFFER_SRGB);
     }
 
     public static String getOpenGLVersion()
