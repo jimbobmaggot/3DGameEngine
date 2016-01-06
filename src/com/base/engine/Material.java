@@ -4,11 +4,17 @@ package com.base.engine;
  *
  * @author Stephen Rumpel
  */
-public class Material 
+public class Material
 {
+
     public Texture texture;
     public Vector3f color;
-    
+
+    public Material(Texture texture)
+    {
+        this(texture, new Vector3f(1, 1, 1));
+    }
+
     public Material(Texture texture, Vector3f color)
     {
         this.texture = texture;

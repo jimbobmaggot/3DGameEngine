@@ -111,6 +111,12 @@ public class Vector3f
         return new Vector3f(Math.abs(x), Math.abs(y), Math.abs(z));
     }
     
+    @Override
+    public String toString()
+    {
+        return "(" + x + " " + y + " " + z + ")";
+    }
+
     // Getters
 
     public float getX()

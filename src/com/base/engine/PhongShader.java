@@ -13,7 +13,9 @@ public class PhongShader extends Shader
         return instance;
     }
     
-    public static Vector3f ambientLight;
+    private static Vector3f ambientLight = new Vector3f(0.1f, 0.1f, 0.1f);
+    private static DirectionalLight directionalLight = new DirectionalLight
+        (new BaseLight(new Vector3f(1, 1, 1), 0), new Vector3f(0, 0, 0));
     
     public PhongShader()
     {
@@ -24,8 +26,13 @@ public class PhongShader extends Shader
         compileShader();
         
         addUniform("transform");
+        addUniform("transformProjected");
         addUniform("baseColor");
         addUniform("ambientLight");
+        
+        addUniform("directionalLight.base.color");
+        addUniform("directionalLight.base.intensity");
+        addUniform("directionalLight.direction");
     }
     
     @Override
@@ -40,9 +47,11 @@ public class PhongShader extends Shader
             RenderUtil.unbindTextures();
         }
         
-        setUniform("transform", projectedMatrix);
+        setUniform("transform", worldMatrix);
+        setUniform("transformProjected", projectedMatrix);
         setUniform("baseColor", material.getColor());
         setUniform("ambientLight", ambientLight);
+        setUniform("directionalLight", directionalLight);
     }
     
     public static Vector3f getAmbientLight()
@@ -52,6 +61,24 @@ public class PhongShader extends Shader
 
     public static void setAmbientLight(Vector3f aAmbientLight)
     {
-        ambientLight = aAmbientLight;
+        PhongShader.ambientLight = aAmbientLight;
+    }
+    
+    public static void setDirectionalLight(DirectionalLight directionalLight)
+    {
+        PhongShader.directionalLight = directionalLight;
+    }
+    
+    public void setUniform(String uniformName, BaseLight baseLight)
+    {
+        setUniform(uniformName + ".color", baseLight.getColor());
+        setUniformf(uniformName + ".intensity", baseLight.getIntensity());
+
+    }
+    
+    public void setUniform(String uniformName, DirectionalLight directionalLight)
+    {
+        setUniform(uniformName + ".base", directionalLight.getBase());
+        setUniform(uniformName + ".direction", directionalLight.getDirection());
     }
 }
