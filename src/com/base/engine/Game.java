@@ -9,9 +9,26 @@ public class Game
     private final Material material;
     private final Camera camera;
 
-    PointLight pLight1 = new PointLight(new BaseLight(new Vector3f(1, 0.5f, 0), 0.8f), new Attenuation(0, 0, 1), new Vector3f(-2, 0, 5f));
-    PointLight pLight2 = new PointLight(new BaseLight(new Vector3f(0, 0.5f, 1), 0.8f), new Attenuation(0, 0, 1), new Vector3f(2, 0, 7f));
+    PointLight pLight1 = new PointLight(
+                            new BaseLight(
+                                new Vector3f(1f, 0.5f, 0), 0.8f), 
+                            new Attenuation(0, 0, 1), 
+                            new Vector3f(-2, 0, 5f), 10);
+    
+    PointLight pLight2 = new PointLight(
+                            new BaseLight(
+                                new Vector3f(0, 0.5f, 1f), 0.8f), 
+                            new Attenuation(0, 0, 1), 
+                            new Vector3f(2, 0, 7f), 10);
 
+    SpotLight sLight1 = new SpotLight(
+                            new PointLight(
+                                new BaseLight(
+                                    new Vector3f(0, 1f, 1f), 0.8f), 
+                                new Attenuation(0, 0, 0.1f), 
+                                new Vector3f(-2, 0, 5f), 30),
+                            new Vector3f(1, 1, 1), 0.7f);
+    
     public Game()
     {
         // mesh = ResourceLoader.loadMesh("monkey.obj");
@@ -63,9 +80,14 @@ public class Game
         PhongShader.setAmbientLight(new Vector3f(0.1f, 0.1f, 0.1f));
         //PhongShader.setDirectionalLight(new DirectionalLight(new BaseLight(new Vector3f(1, 1, 1), 0.8f), new Vector3f(1, 1, 1)));
 
-        PhongShader.setPointLight(new PointLight[]
+//        PhongShader.setPointLight(new PointLight[]
+//        {
+//            pLight1, pLight2
+//        });
+
+        PhongShader.setSpotLight(new SpotLight[]
         {
-            pLight1, pLight2
+            sLight1
         });
     }
 
@@ -89,6 +111,9 @@ public class Game
         
         pLight1.setPosition(new Vector3f(3,0,8.0f * (float)(Math.sin(temp) + 1.0/2.0) + 10));
  	pLight2.setPosition(new Vector3f(7,0,8.0f * (float)(Math.cos(temp) + 1.0/2.0) + 10));
+        
+        sLight1.getPointLight().setPosition(camera.getPos());
+        sLight1.setDirection(camera.getForward());
     }
 
     public void render()

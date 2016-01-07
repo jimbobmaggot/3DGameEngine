@@ -6,15 +6,17 @@ package com.base.engine;
  */
 public class PointLight 
 {
-    public BaseLight baseLight;
-    public Attenuation atten;
-    public Vector3f position;
+    private BaseLight baseLight;
+    private Attenuation atten;
+    private Vector3f position;
+    private float range;
     
-    public PointLight(BaseLight baseLight, Attenuation atten, Vector3f position)
+    public PointLight(BaseLight baseLight, Attenuation atten, Vector3f position, float range)
     {
         this.baseLight = baseLight;
         this.atten = atten;
         this.position = position;
+        this.range = range;
     }
 
     public BaseLight getBaseLight()
@@ -33,6 +35,11 @@ public class PointLight
     {
         return position;
     }
+    
+    public float getRange()
+    {
+        return range;
+    }
 
     // Setters
     
@@ -49,5 +56,10 @@ public class PointLight
     public void setPosition(Vector3f position)
     {
         this.position = position;
+    }
+    
+    public void setRange(float range)
+    {
+        this.range = range;
     }
 }
