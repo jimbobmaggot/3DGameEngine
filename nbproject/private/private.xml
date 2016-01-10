@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/Game.java</file>
-            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/PointLight.java</file>
-            <file>file:/C:/Programming/Java/3DGameEngine/res/shaders/phongFragment.fs</file>
-            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/RenderUtil.java</file>
-            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/Attenuation.java</file>
-            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/PhongShader.java</file>
-            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/Shader.java</file>
+            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/game/TestGame.java</file>
+            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/core/CoreEngine.java</file>
+            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/game/Main.java</file>
+            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/game/Game.java</file>
         </group>
     </open-files>
 </project-private>
