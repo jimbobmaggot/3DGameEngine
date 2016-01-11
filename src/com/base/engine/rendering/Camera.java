@@ -35,10 +35,10 @@ public class Camera
         return projection.mul(cameraRotation.mul(cameraTranslation));
     }
 
-    public void input()
+    public void input(float delta)
     {
         float sensitivity = 0.5f;
-        float movAmt = (float) (10 * Time.getDelta());
+        float movAmt = (float) (10 * delta);
 
         if (Input.getKey(Input.KEY_ESCAPE))
         {

@@ -5,14 +5,13 @@ import com.base.engine.rendering.*;
 
 public class TestGame extends Game
 {
-//    private Camera camera;
+
     private GameObject planeObject;
 
     @Override
     public void init()
     {
-//        camera = new Camera();
-        
+
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
 
@@ -29,39 +28,16 @@ public class TestGame extends Game
             0, 1, 2,
             2, 1, 3
         };
-        
+
         Material material = new Material(new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
         Mesh mesh = new Mesh(vertices, indices, true);
-        
+
         MeshRenderer meshRenderer = new MeshRenderer(mesh, material);
-        
+
         GameObject planeObject = new GameObject();
         planeObject.addComponent(meshRenderer);
-        planeObject.getTransform().setTranslation(0, -1, 5);
-                
+        planeObject.getTransform().setPos(0, -1, 5);
+
         getRootObject().addChild(planeObject);
-
-//        Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
-//        Transform.setCamera(camera);
     }
-
-//    @Override
-//    public void input()
-//    {
-//        camera.input();
-//        root.input();
-//    }
-//
-//    @Override
-//    public void update()
-//    {
-//        root.getTransform().setTranslation(0, -1, 5);
-//        root.update();
-//    }
-//
-//    @Override
-//    public void render()
-//    {
-//        root.render();
-//    }
 }
