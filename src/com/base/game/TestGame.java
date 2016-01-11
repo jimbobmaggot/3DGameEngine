@@ -3,17 +3,15 @@ package com.base.game;
 import com.base.engine.core.*;
 import com.base.engine.rendering.*;
 
-public class TestGame implements Game
+public class TestGame extends Game
 {
-    private Camera camera;
-    
-    private GameObject root;
+//    private Camera camera;
+    private GameObject planeObject;
 
     @Override
     public void init()
     {
-        root = new GameObject();
-        camera = new Camera();
+//        camera = new Camera();
         
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
@@ -36,29 +34,34 @@ public class TestGame implements Game
         Mesh mesh = new Mesh(vertices, indices, true);
         
         MeshRenderer meshRenderer = new MeshRenderer(mesh, material);
-        root.addComponent(meshRenderer);
+        
+        GameObject planeObject = new GameObject();
+        planeObject.addComponent(meshRenderer);
+        planeObject.getTransform().setTranslation(0, -1, 5);
+                
+        getRootObject().addChild(planeObject);
 
-        Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
-        Transform.setCamera(camera);
+//        Transform.setProjection(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
+//        Transform.setCamera(camera);
     }
 
-    @Override
-    public void input()
-    {
-        camera.input();
-        root.input();
-    }
-
-    @Override
-    public void update()
-    {
-        root.getTransform().setTranslation(0, -1, 5);
-        root.update();
-    }
-
-    @Override
-    public void render()
-    {
-        root.render();
-    }
+//    @Override
+//    public void input()
+//    {
+//        camera.input();
+//        root.input();
+//    }
+//
+//    @Override
+//    public void update()
+//    {
+//        root.getTransform().setTranslation(0, -1, 5);
+//        root.update();
+//    }
+//
+//    @Override
+//    public void render()
+//    {
+//        root.render();
+//    }
 }

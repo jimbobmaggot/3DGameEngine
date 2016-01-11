@@ -1,12 +1,12 @@
 package com.base.engine.core;
 
 import com.base.engine.rendering.Window;
-import com.base.engine.rendering.RenderUtil;
 
 public class CoreEngine
 {
     private boolean isRunning;
     private final Game game;
+    private RenderingEngine renderingEngine;
     private final int width;
     private final int height;
     private final double frameTime;
@@ -20,16 +20,10 @@ public class CoreEngine
         this.frameTime = 1.0 / framerate;
     }
     
-    private void initializeRenderingSystem()
-    {
-        System.out.println(RenderUtil.getOpenGLVersion());
-        RenderUtil.initGraphics();
-    }
-    
     public void createWindow(String title)
     {
         Window.createWindow(width, height, title);
-        initializeRenderingSystem();
+        this.renderingEngine = new RenderingEngine();
         
     }
 
@@ -90,6 +84,7 @@ public class CoreEngine
                 Time.setDelta(frameTime);
 
                 game.input();
+                renderingEngine.input();
                 Input.update();
 
                 game.update();
@@ -103,7 +98,8 @@ public class CoreEngine
             }
             if (render)
             {
-                render();
+                renderingEngine.render(game.getRootObject());
+                Window.render();
                 frames++;
             }
             else
@@ -120,13 +116,6 @@ public class CoreEngine
         }
 
         cleanUp();
-    }
-
-    private void render()
-    {
-        RenderUtil.clearScreen();
-        game.render();
-        Window.render();
     }
 
     private void cleanUp()
