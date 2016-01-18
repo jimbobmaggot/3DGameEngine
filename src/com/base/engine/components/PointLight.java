@@ -9,37 +9,27 @@ import com.base.engine.rendering.ForwardPoint;
  */
 public class PointLight extends BaseLight
 {
-    private BaseLight baseLight;
-    private Vector3f position;
-    public float constant;
-    public float linear;
-    public float exponent;
-    private float range;
+
+    private static final int COLOR_DEPTH = 256;
     
-    public PointLight(Vector3f color, float intensity, float constant, float linear, float exponent, Vector3f position, float range)
+    private Vector3f attenuation;
+    private float range;
+
+    public PointLight(Vector3f color, float intensity, Vector3f attenuation)
     {
         super(color, intensity);
-        this.constant = constant;
-        this.linear = linear;
-        this.exponent = exponent;
-        this.position = position;
-        this.range = range;
+        this.attenuation = attenuation;
         
+        float constant = attenuation.getX() - COLOR_DEPTH * getIntensity() * getColor().max();
+        float linear = attenuation.getY();
+        float exponent = attenuation.getZ();
+        //quadratic equation
+        this.range = (float)(-linear + Math.sqrt(linear * linear - 4 * exponent * constant))/(2 * exponent);
+
         setShader(ForwardPoint.getInstance());
     }
 
-    public BaseLight getBaseLight()
-    {
-        return baseLight;
-    }
-    
     // Getters
-
-    public Vector3f getPosition()
-    {
-        return position;
-    }
-    
     public float getRange()
     {
         return range;
@@ -47,31 +37,20 @@ public class PointLight extends BaseLight
 
     public float getConstant()
     {
-        return constant;
+        return attenuation.getX();
     }
 
     public float getExponent()
     {
-        return exponent;
+        return attenuation.getY();
     }
 
     public float getLinear()
     {
-        return linear;
+        return attenuation.getZ();
     }
 
     // Setters
-    
-    public void setBaseLight(BaseLight baseLight)
-    {
-        this.baseLight = baseLight;
-    }
-
-    public void setPosition(Vector3f position)
-    {
-        this.position = position;
-    }
-    
     public void setRange(float range)
     {
         this.range = range;
@@ -79,16 +58,16 @@ public class PointLight extends BaseLight
 
     public void setConstant(float constant)
     {
-        this.constant = constant;
+        this.attenuation.setX(constant);
     }
 
     public void setExponent(float exponent)
     {
-        this.exponent = exponent;
+        this.attenuation.setX(exponent);
     }
 
     public void setLinear(float linear)
     {
-        this.linear = linear;
+        this.attenuation.setX(linear);
     }
 }

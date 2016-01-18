@@ -1,5 +1,6 @@
 package com.base.engine.components;
 
+import com.base.engine.core.GameObject;
 import com.base.engine.rendering.RenderingEngine;
 import com.base.engine.core.Transform;
 import com.base.engine.rendering.Shader;
@@ -10,20 +11,32 @@ import com.base.engine.rendering.Shader;
  */
 public abstract class GameComponent
 {
+    
+    private GameObject parent;
 
-    public void input(Transform transform, float delta)
+    public void input(float delta)
     {
 
     }
 
-    public void update(Transform transform, float delta)
+    public void update(float delta)
     {
 
     }
 
-    public void render(Transform transform, Shader shader)
+    public void render(Shader shader)
     {
 
+    }
+    
+    public Transform getTransform()
+    {
+        return parent.getTransform();
+    }
+    
+    public void setParent(GameObject parent)
+    {
+        this.parent = parent;
     }
     
     public void addToRenderingEngine(RenderingEngine renderingEngine)
