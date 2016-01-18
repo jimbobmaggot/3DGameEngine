@@ -18,7 +18,7 @@ public class Vector3f
     {
         return (float) Math.sqrt(x * x + y * y + z * z);
     }
-    
+
     public float max()
     {
         return Math.max(x, Math.max(y, z));
@@ -47,34 +47,22 @@ public class Vector3f
 
     public Vector3f rotate(float angle, Vector3f axis)
     {
-        float sinHalfAngle = (float) Math.sin(Math.toRadians(angle / 2));
-        float cosHalfAngle = (float) Math.cos(Math.toRadians(angle / 2));
-
-        float rX = axis.getX() * sinHalfAngle;
-        float rY = axis.getY() * sinHalfAngle;
-        float rZ = axis.getZ() * sinHalfAngle;
-        float rW = cosHalfAngle;
-
-        Quaternion rotation = new Quaternion(rX, rY, rZ, rW);
+        Quaternion rotation = new Quaternion().initRotation(axis, angle);
         Quaternion conjugate = rotation.conjugate();
 
         Quaternion w = rotation.mul(this).mul(conjugate);
 
-        x = w.getX();
-        y = w.getY();
-        z = w.getZ();
-
-        return this;
+        return new Vector3f(w.getX(), w.getY(), w.getZ());
     }
-    
+
     public Vector3f lerp(Vector3f dest, float lerpFactor)
     {
         return dest.sub(this).mul(lerpFactor).add(this);
     }
-    
+
     public boolean equals(Vector3f r)
     {
-        return x == r.getX() && y == r.getY()&& z == r.getZ();
+        return x == r.getX() && y == r.getY() && z == r.getZ();
     }
 
     // add
@@ -126,6 +114,13 @@ public class Vector3f
         return new Vector3f(Math.abs(x), Math.abs(y), Math.abs(z));
     }
 
+    public void set(float x, float y, float z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
     @Override
     public String toString()
     {
@@ -137,12 +132,12 @@ public class Vector3f
     {
         return new Vector2f(x, y);
     }
-    
+
     public Vector2f getXZ()
     {
         return new Vector2f(x, z);
     }
-    
+
     public Vector2f getYX()
     {
         return new Vector2f(y, x);

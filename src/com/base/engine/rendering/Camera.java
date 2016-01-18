@@ -2,7 +2,6 @@ package com.base.engine.rendering;
 
 import com.base.engine.core.Input;
 import com.base.engine.core.Matrix4f;
-import com.base.engine.core.Time;
 import com.base.engine.core.Vector2f;
 import com.base.engine.core.Vector3f;
 
@@ -78,11 +77,11 @@ public class Camera
 
             if (rotY)
             {
-                rotateY(deltaPos.getX() * sensitivity);
+                rotateY((float)Math.toRadians(deltaPos.getX() * sensitivity));
             }
             if (rotX)
             {
-                rotateX(-deltaPos.getY() * sensitivity);
+                rotateX((float)Math.toRadians(-deltaPos.getY() * sensitivity));
             }
 
             if (rotY || rotX)
