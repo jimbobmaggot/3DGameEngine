@@ -1,4 +1,4 @@
-package com.base.engine.rendering;
+package com.base.engine.components;
 
 import com.base.engine.core.Vector3f;
 

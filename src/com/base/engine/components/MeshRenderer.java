@@ -1,6 +1,5 @@
-package com.base.game;
+package com.base.engine.components;
 
-import com.base.engine.core.GameComponent;
 import com.base.engine.core.Transform;
 import com.base.engine.rendering.*;
 
@@ -8,7 +7,7 @@ import com.base.engine.rendering.*;
  *
  * @author Stephen Rumpel
  */
-public class MeshRenderer implements GameComponent
+public class MeshRenderer extends GameComponent
 {
 
     private Mesh mesh;
@@ -18,16 +17,6 @@ public class MeshRenderer implements GameComponent
     {
         this.mesh = mesh;
         this.material = material;
-    }
-
-    @Override
-    public void input(Transform transform, float delta)
-    {
-    }
-
-    @Override
-    public void update(Transform transform, float delta)
-    {
     }
 
     @Override
