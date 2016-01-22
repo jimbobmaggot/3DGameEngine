@@ -7,11 +7,6 @@ public class Quaternion
     private float y;
     private float z;
     private float w;
-    
-    public Quaternion()
-    {
-        this(0, 0, 0, 1);
-    }
 
     public Quaternion(float x, float y, float z, float w)
     {
@@ -20,8 +15,8 @@ public class Quaternion
         this.z = z;
         this.w = w;
     }
-    
-    public Quaternion initRotation(Vector3f axis, float angle)
+
+    public Quaternion(Vector3f axis, float angle)
     {
         float sinHalfAngle = (float) Math.sin(angle / 2);
         float cosHalfAngle = (float) Math.cos(angle / 2);
@@ -30,8 +25,6 @@ public class Quaternion
         this.y = axis.getY() * sinHalfAngle;
         this.z = axis.getZ() * sinHalfAngle;
         this.w = cosHalfAngle;
-        
-        return this;
     }
 
     public float length()
@@ -49,6 +42,31 @@ public class Quaternion
     public Quaternion conjugate()
     {
         return new Quaternion(-x, -y, -z, w);
+    }
+
+    public boolean equals(Quaternion r)
+    {
+        return x == r.getX() && y == r.getY() && z == r.getZ() && w == r.getW();
+    }
+
+    public Quaternion set(float x, float y, float z, float w)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
+        return this;
+    }
+
+    public Quaternion set(Quaternion r)
+    {
+        set(r.getX(), r.getY(), r.getZ(), r.getW());
+        return this;
+    }
+
+    public Quaternion mul(float r)
+    {
+        return new Quaternion(x * r, y * r, z * r, w * r);
     }
 
     public Quaternion mul(Quaternion r)
@@ -73,37 +91,41 @@ public class Quaternion
 
     public Matrix4f toRotationMatrix()
     {
-        return new Matrix4f().initRotation(getForward(), getUp(), getRight());
+        Vector3f forward = new Vector3f(2.0f * (x * z - w * y), 2.0f * (y * z + w * x), 1.0f - 2.0f * (x * x + y * y));
+        Vector3f up = new Vector3f(2.0f * (x * y + w * z), 1.0f - 2.0f * (x * x + z * z), 2.0f * (y * z - w * x));
+        Vector3f right = new Vector3f(1.0f - 2.0f * (y * y + z * z), 2.0f * (x * y - w * z), 2.0f * (x * z + w * y));
+
+        return new Matrix4f().initRotation(forward, up, right);
     }
 
     public Vector3f getForward()
     {
-        return new Vector3f(2.0f * (x * z - w * y), 2.0f * (y * z + w * x), 1.0f - 2.0f * (x * x + y * y));
+        return new Vector3f(0, 0, 1).rotate(this);
     }
 
     public Vector3f getBack()
     {
-        return new Vector3f(-2.0f * (x * z - w * y), -2.0f * (y * z + w * x), -(1.0f - 2.0f * (x * x + y * y)));
+        return new Vector3f(0, 0, -1).rotate(this);
     }
 
     public Vector3f getUp()
     {
-        return new Vector3f(2.0f * (x * y + w * z), 1.0f - 2.0f * (x * x + z * z), 2.0f * (y * z - w * x));
+        return new Vector3f(0, 1, 0).rotate(this);
     }
 
     public Vector3f getDown()
     {
-        return new Vector3f(-2.0f * (x * y + w * z), -(1.0f - 2.0f * (x * x + z * z)), -2.0f * (y * z - w * x));
+        return new Vector3f(0, -1, 0).rotate(this);
     }
 
     public Vector3f getRight()
     {
-        return new Vector3f(1.0f - 2.0f * (y * y + z * z), 2.0f * (x * y - w * z), 2.0f * (x * z + w * y));
+        return new Vector3f(1, 0, 0).rotate(this);
     }
 
     public Vector3f getLeft()
     {
-        return new Vector3f(-(1.0f - 2.0f * (y * y + z * z)), -2.0f * (x * y - w * z), -2.0f * (x * z + w * y));
+        return new Vector3f(-1, 0, 0).rotate(this);
     }
 
     // Getters
