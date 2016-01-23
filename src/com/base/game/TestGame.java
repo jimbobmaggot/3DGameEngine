@@ -44,9 +44,10 @@ public class TestGame extends Game
         Mesh mesh2 = new Mesh(vertices2, indices2, true);
 
         Mesh mesh = new Mesh(vertices, indices, true);
-        Material material = new Material(
-                new Texture("test.png"),
-                new Vector3f(1, 1, 1), 1, 8);
+        Material material = new Material();
+        material.addTexture("diffuse", new Texture("test.png"));
+        material.addFloat("specularIntensity", 1f);
+        material.addFloat("specularPower", 8f);
 
         MeshRenderer meshRenderer = new MeshRenderer(mesh, material);
 
@@ -74,10 +75,10 @@ public class TestGame extends Game
                 new Vector3f(0, 1, 0),
                 (float) Math.toRadians(90.0)));
 
-        getRootObject().addChild(planeObject);
-        getRootObject().addChild(directionalLightObject);
-        getRootObject().addChild(pointLightObject);
-        getRootObject().addChild(spotLightObject);
+        addObject(planeObject);
+        addObject(directionalLightObject);
+        addObject(pointLightObject);
+        addObject(spotLightObject);
 
 //        getRootObject().addChild(
 //                new GameObject().addComponent(
@@ -99,6 +100,6 @@ public class TestGame extends Game
                                 (float) Window.getWidth() / (float) Window.getHeight(),
                                 0.01f, 1000.0f)));
 
-        getRootObject().addChild(testMesh1);
+        addObject(testMesh1);
     }
 }

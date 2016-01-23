@@ -9,8 +9,8 @@ import com.base.engine.rendering.*;
 public class MeshRenderer extends GameComponent
 {
 
-    private Mesh mesh;
-    private Material material;
+    private final Mesh mesh;
+    private final Material material;
 
     public MeshRenderer(Mesh mesh, Material material)
     {
@@ -19,10 +19,10 @@ public class MeshRenderer extends GameComponent
     }
 
     @Override
-    public void render(Shader shader)
+    public void render(Shader shader, RenderingEngine renderingEngine)
     {
         shader.bind();
-        shader.updateUniforms(getTransform(), material);
+        shader.updateUniforms(getTransform(), material, renderingEngine);
         mesh.draw();
     }
 }
