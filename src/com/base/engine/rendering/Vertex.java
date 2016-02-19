@@ -10,7 +10,7 @@ public class Vertex
 
     private Vector3f pos;
     private Vector2f textCoord;
-    public Vector3f normal;
+    private Vector3f normal;
 
     public Vertex(Vector3f pos)
     {
