@@ -110,6 +110,31 @@ public class Transform
 
         return parentRotation.mul(rot);
     }
+    
+    public void rotX(float angle)
+    {
+        setRot(new Quaternion(new Vector3f(1, 0, 0), (float) Math.toRadians(angle)));
+    }
+    
+    public void rotY(float angle)
+    {
+        setRot(new Quaternion(new Vector3f(0, 1, 0), (float) Math.toRadians(angle)));
+    }
+    
+    public void rotZ(float angle)
+    {
+        setRot(new Quaternion(new Vector3f(0, 0, 1), (float) Math.toRadians(angle)));
+    }
+    
+    public void setPos(float x, float y, float z)
+    {
+        setPos(new Vector3f(x, y, z));
+    }
+    
+    public void setScale(float amt)
+    {
+        setScale(new Vector3f(amt, amt, amt));
+    }
 
     // Getters
     public Vector3f getPos()

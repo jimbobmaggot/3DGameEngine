@@ -13,10 +13,6 @@ public class Material
     private final HashMap<String, Texture> textureHashMap;
     private final HashMap<String, Vector3f> vector3fHashMap;
     private final HashMap<String, Float> floatHashMap;
-//    private Texture texture;
-//    private Vector3f color;
-//    public float specularIntensity;
-//    public float specularPower;
 
     public Material()
     {

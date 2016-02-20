@@ -27,86 +27,65 @@ public class TestGame extends Game
             2, 1, 3
         };
 
-        Vertex[] vertices2 = new Vertex[]
-        {
-            new Vertex(new Vector3f(-fieldWidth / 10, 0.0f, -fieldDepth / 10), new Vector2f(0.0f, 0.0f)),
-            new Vertex(new Vector3f(-fieldWidth / 10, 0.0f, fieldDepth / 10 * 3), new Vector2f(0.0f, 1.0f)),
-            new Vertex(new Vector3f(fieldWidth / 10 * 3, 0.0f, -fieldDepth / 10), new Vector2f(1.0f, 0.0f)),
-            new Vertex(new Vector3f(fieldWidth / 10 * 3, 0.0f, fieldDepth / 10 * 3), new Vector2f(1.0f, 1.0f))
-        };
+        // create materials
+        Material testMaterial = new Material();
+        testMaterial.addTexture("diffuse", new Texture("test.png"));
+        testMaterial.addFloat("specularIntensity", 1f);
+        testMaterial.addFloat("specularPower", 8f);
+        
+        Material woodMaterial = new Material();
+        woodMaterial.addTexture("diffuse", new Texture("wood.png"));
+        woodMaterial.addFloat("specularIntensity", 0.5f);
+        woodMaterial.addFloat("specularPower", 10f);
 
-        int indices2[] =
-        {
-            0, 1, 2,
-            2, 1, 3
-        };
+        // create meshes
+        Mesh floorMesh = new Mesh(vertices, indices, true);
+        Mesh monkeyMesh = new Mesh("monkey3.obj");
+        Mesh chairMesh = new Mesh("chair.obj");
 
-        Mesh mesh2 = new Mesh(vertices2, indices2, true);
+        // create camera
+        Camera camera = new Camera((float) Math.toRadians(70.0f), (float) Window.getWidth() / (float) Window.getHeight(), 0.01f, 1000.0f);
 
-        Mesh mesh = new Mesh(vertices, indices, true);
-        Material material = new Material();
-        material.addTexture("diffuse", new Texture("test.png"));
-        material.addFloat("specularIntensity", 1f);
-        material.addFloat("specularPower", 8f);
+        // create lights
+        DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0, 0, 1), 0.4f);
+        PointLight pointLight = new PointLight(new Vector3f(0, 1, 0), 0.4f, new Vector3f(0, 0, 1));
+        SpotLight spotLight = new SpotLight(new Vector3f(0, 1, 1), 0.4f, new Vector3f(0, 0, 0.1f), 0.7f);
 
-        Mesh tempMesh = new Mesh("monkey3.obj");
+        // create objects
+        GameObject floorObject = new GameObject().addComponent(new MeshRenderer(floorMesh, woodMaterial));
+        GameObject monkeyObject = new GameObject().addComponent(new MeshRenderer(monkeyMesh, testMaterial));
+        GameObject chairObject = new GameObject().addComponent(new MeshRenderer(chairMesh, woodMaterial));
 
-        MeshRenderer meshRenderer = new MeshRenderer(mesh, material);
+        GameObject cameraObject = new GameObject().addComponent(camera);
 
-        GameObject planeObject = new GameObject();
-        planeObject.addComponent(meshRenderer);
-        planeObject.getTransform().getPos().set(0, -1, 5);
+        GameObject directionalLightObject = new GameObject().addComponent(directionalLight);
+        GameObject pointLightObject = new GameObject().addComponent(pointLight);
+        GameObject spotLightObject = new GameObject().addComponent(spotLight);
 
-        GameObject directionalLightObject = new GameObject();
-        directionalLightObject.addComponent(new DirectionalLight(
-                new Vector3f(0, 0, 1), 0.4f)).getTransform()
-                .setRot(new Quaternion(new Vector3f(1, 0, 0), (float) Math.toRadians(-45)));
+        // add Objects
+        addObject(floorObject);
+        addObject(monkeyObject);
+        addObject(chairObject);
 
-        GameObject pointLightObject = new GameObject();
-        pointLightObject.addComponent(new PointLight(
-                new Vector3f(0, 1, 0), 0.4f,
-                new Vector3f(0, 0, 1)));
+        addObject(cameraObject);
 
-        GameObject spotLightObject = new GameObject();
-        spotLightObject.addComponent(new SpotLight(
-                new Vector3f(0, 1, 1), 0.4f,
-                new Vector3f(0, 0, 0.1f), 0.7f));
-
-        spotLightObject.getTransform().getPos().set(5, 0, 5);
-        spotLightObject.getTransform().setRot(new Quaternion(
-                new Vector3f(0, 1, 0),
-                (float) Math.toRadians(90.0)));
-
-        addObject(planeObject);
         addObject(directionalLightObject);
         addObject(pointLightObject);
         addObject(spotLightObject);
 
-//        getRootObject().addChild(
-//                new GameObject().addComponent(
-//                        new Camera((float) Math.toRadians(70.0f),
-//                                (float) Window.getWidth() / (float) Window.getHeight(),
-//                                0.01f, 1000.0f)));
-        GameObject testMesh1 = new GameObject().addComponent(new MeshRenderer(mesh2, material));
-        GameObject testMesh2 = new GameObject().addComponent(new MeshRenderer(mesh2, material));
-        GameObject testMesh3 = new GameObject().addComponent(new MeshRenderer(tempMesh, material));
+        // Transform objects
+        monkeyObject.getTransform().setPos(5, 3, 5);
+        monkeyObject.getTransform().rotY(270.0f);
+        chairObject.getTransform().setPos(-2, 0, 2);
+        chairObject.getTransform().rotY(50.0f);
+        chairObject.getTransform().setScale(0.5f);
 
-        testMesh1.getTransform().getPos().set(0, 2, 0);
-        testMesh1.getTransform().setRot(new Quaternion(new Vector3f(0, 1, 0), 0.4f));
+        cameraObject.getTransform().setPos(-3, 1, 10);
+        cameraObject.getTransform().rotY(140.0f);
 
-        testMesh2.getTransform().getPos().set(0, 0, 5);
-
-        testMesh1.addChild(testMesh2);
-        testMesh2.addChild(
-                new GameObject().addComponent(
-                        new Camera((float) Math.toRadians(70.0f),
-                                (float) Window.getWidth() / (float) Window.getHeight(),
-                                0.01f, 1000.0f)));
-
-        addObject(testMesh1);
-        addObject(testMesh3);
-
-        testMesh3.getTransform().getPos().set(5, 5, 5);
-        testMesh3.getTransform().setRot(new Quaternion(new Vector3f(0, 1, 0), (float) Math.toRadians(70.0f)));
+        directionalLightObject.getTransform().rotX(-45.0f);
+        pointLightObject.getTransform().setPos(2, 2, 2);
+        spotLightObject.getTransform().setPos(5, 0, 5);
+        spotLightObject.getTransform().rotY(90.0f);
     }
 }

@@ -2,7 +2,6 @@ package com.base.engine.rendering.meshLoading;
 
 import com.base.engine.core.Vector2f;
 import com.base.engine.core.Vector3f;
-import com.base.engine.rendering.Vertex;
 import java.util.ArrayList;
 
 /**

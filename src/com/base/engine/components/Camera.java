@@ -7,9 +7,10 @@ import com.base.engine.rendering.Window;
 public class Camera extends GameComponent
 {
 
-    public static final Vector3f yAxis = new Vector3f(0, 1, 0);
-
-    private Matrix4f projection;
+    private static final Vector3f yAxis = new Vector3f(0, 1, 0);
+    private final Matrix4f projection;
+    private boolean mouseLocked = false;
+    private final Vector2f centerPosition = new Vector2f(Window.getWidth() / 2, Window.getHeight() / 2);
 
     public Camera(float fov, float aspect, float zNear, float zFar)
     {
@@ -30,9 +31,6 @@ public class Camera extends GameComponent
     {
         renderingEngine.addCamera(this);
     }
-
-    boolean mouseLocked = false;
-    Vector2f centerPosition = new Vector2f(Window.getWidth() / 2, Window.getHeight() / 2);
 
     @Override
     public void input(float delta)
