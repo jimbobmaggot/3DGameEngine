@@ -3,12 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/game/TestGame.java</file>
-            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/rendering/meshLoading/OBJIndex.java</file>
+            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/rendering/Texture.java</file>
             <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/rendering/Mesh.java</file>
-            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/core/CoreEngine.java</file>
-            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/rendering/meshLoading/IndexedModel.java</file>
-            <file>file:/C:/Programming/Java/3DGameEngine/src/com/base/engine/rendering/meshLoading/OBJModel.java</file>
         </group>
     </open-files>
 </project-private>
