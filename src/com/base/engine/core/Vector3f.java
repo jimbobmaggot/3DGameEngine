@@ -91,6 +91,13 @@ public class Vector3f
     {
         return dest.sub(this).mul(lerpFactor).add(this);
     }
+    
+    public Vector3f reflect(Vector3f normal)
+    {
+        return this.sub(normal.mul(this.dot(normal) * 2.0f));
+    }
+    
+    //Math
 
     public Vector3f add(Vector3f r)
     {

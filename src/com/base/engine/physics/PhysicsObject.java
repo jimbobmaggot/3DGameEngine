@@ -9,29 +9,40 @@ import com.base.engine.core.Vector3f;
 public class PhysicsObject
 {
 
-    public Vector3f position;
-    public Vector3f velocity;
-    public float radius;
+    private Vector3f position;
+    private Vector3f oldPosition;
+    private Vector3f velocity;
+    private Collider collider;
 
     public PhysicsObject()
     {
         this.position = new Vector3f();
+        this.oldPosition = position;
         this.velocity = new Vector3f();
-        this.radius = 1.0f;
+        this.collider = new Collider();
+    }
+    
+    public PhysicsObject(Collider collider)
+    {
+        this.position = collider.getCenter();
+        this.oldPosition = position;
+        this.velocity = new Vector3f();
+        this.collider = collider;
     }
 
-    public PhysicsObject(Vector3f position, Vector3f velocity, float radius)
+    public PhysicsObject(Collider collider, Vector3f velocity)
     {
-        this.position = position;
+        this.position = collider.getCenter();
+        this.oldPosition = position;
         this.velocity = velocity;
-        this.radius = radius;
+        this.collider = collider;
     }
 
     public void integrate(float delta)
     {
         setPosition(position.add(velocity.mul(delta)));
     }
-    
+
     public Vector3f getPosition()
     {
         return position;
@@ -42,14 +53,13 @@ public class PhysicsObject
         return velocity;
     }
 
-    public float getRadius()
+    public Collider getCollider()
     {
-        return radius;
-    }
-    
-    public BoundingSphere getBoundingSphere()
-    {
-        return new BoundingSphere(position, radius);
+        Vector3f translation = position.sub(oldPosition);
+        oldPosition = position;
+        collider.transform(translation);
+
+        return collider;
     }
 
     public void setPosition(Vector3f position)
@@ -62,9 +72,4 @@ public class PhysicsObject
         this.velocity = velocity;
     }
 
-    public void setRadius(float radius)
-    {
-        this.radius = radius;
-    }
-    
 }

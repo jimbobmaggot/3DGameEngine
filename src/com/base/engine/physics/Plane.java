@@ -47,7 +47,7 @@ public class Plane
         float distanceFromSphereCenter = Math.abs(normal.dot(other.getCenter()) + distance);
         float distanceFromSphere = distanceFromSphereCenter - other.getRadius();
         
-        return new IntersectData(distanceFromSphere < 0 , distanceFromSphere);
+        return new IntersectData(distanceFromSphere < 0 , normal.mul(distanceFromSphere));
     }
 
     public float getDistance()

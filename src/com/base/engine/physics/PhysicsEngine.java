@@ -1,5 +1,6 @@
 package com.base.engine.physics;
 
+import com.base.engine.core.Vector3f;
 import java.util.ArrayList;
 
 /**
@@ -36,13 +37,16 @@ public class PhysicsEngine
             for (int j = i + 1; j < getObjects().size(); j++)
             {
                 IntersectData intersectData
-                        = objects.get(i).getBoundingSphere().intersectBoundingSphere(
-                        objects.get(j).getBoundingSphere());
+                        = objects.get(i).getCollider().intersect(
+                        objects.get(j).getCollider());
 
                 if (intersectData.getDoesIntersect())
                 {
-                    objects.get(i).setVelocity(objects.get(i).getVelocity().mul(-1));
-                    objects.get(j).setVelocity(objects.get(j).getVelocity().mul(-1));
+                    Vector3f direction = intersectData.getDirection().normalized();
+                    Vector3f otherDirection = direction.reflect(objects.get(i).getVelocity().normalized());
+                    
+                    objects.get(i).setVelocity(objects.get(i).getVelocity().reflect(otherDirection));
+                    objects.get(j).setVelocity(objects.get(j).getVelocity().reflect(direction));
                 }
             }
         }

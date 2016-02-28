@@ -32,7 +32,7 @@ public class AABoundingBox
 
         float maxDistance = distances.max();
 
-        return new IntersectData(maxDistance < 0, maxDistance);
+        return new IntersectData(maxDistance < 0, distances);
     }
 
     public Vector3f getMaxExtents()

@@ -2,6 +2,7 @@ package com.base.game;
 
 import com.base.engine.components.*;
 import com.base.engine.core.*;
+import com.base.engine.physics.BoundingSphere;
 import com.base.engine.physics.PhysicsEngine;
 import com.base.engine.physics.PhysicsObject;
 import com.base.engine.rendering.*;
@@ -39,7 +40,7 @@ public class TestGame extends Game
         woodMaterial.addTexture("diffuse", new Texture("wood.png"));
         woodMaterial.addFloat("specularIntensity", 0.5f);
         woodMaterial.addFloat("specularPower", 10f);
-        
+
         Material brickMaterial = new Material();
         brickMaterial.addTexture("diffuse", new Texture("bricks.png"));
         brickMaterial.addFloat("specularIntensity", 0.5f);
@@ -49,11 +50,11 @@ public class TestGame extends Game
         Mesh floorMesh = new Mesh(vertices, indices, true);
         //Mesh monkeyMesh = new Mesh("monkey3.obj");
         //Mesh chairMesh = new Mesh("chair.obj");
-        Mesh cubeMesh = new Mesh("cube.obj");
+        Mesh sphereMesh = new Mesh("sphere.obj");
 
         // create camera
         Camera camera = new Camera((float) Math.toRadians(70.0f), (float) Window.getWidth() / (float) Window.getHeight(), 0.01f, 1000.0f);
-        
+
         // create lights
         DirectionalLight directionalLight = new DirectionalLight(new Vector3f(1, 1, 1), 0.4f);
         //PointLight pointLight = new PointLight(new Vector3f(0, 1, 0), 0.4f, new Attenuation(0, 0, 1));
@@ -99,8 +100,12 @@ public class TestGame extends Game
         //Physics 
         PhysicsEngine physicsEngine = new PhysicsEngine();
 
-        PhysicsObject physicsObject1 = new PhysicsObject(new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(0.0f, 0.0f, 1.0f), 1.0f);
-        PhysicsObject physicsObject2 = new PhysicsObject(new Vector3f(0.0f, 0.0f, 10.0f), new Vector3f(0.0f, 0.0f, -1.0f), 2.0f);
+        PhysicsObject physicsObject1 = new PhysicsObject(
+                new BoundingSphere(new Vector3f(), 1.0f),
+                new Vector3f(0.0f, 0.0f,  1.141f/2.0f));
+        PhysicsObject physicsObject2 = new PhysicsObject(
+                new BoundingSphere(new Vector3f(1.414f/2.0f * 7.0f, 0.0f, 1.414f/2.0f * 7.0f), 1.0f),
+                new Vector3f(-1.414f/2.0f, 0.0f, -1.414f/2.0f));
 
         physicsEngine.addObject(physicsObject1);
         physicsEngine.addObject(physicsObject2);
@@ -112,12 +117,14 @@ public class TestGame extends Game
         for (int i = 0; i < physicsEngineComponent.getEngine().getSize(); i++)
         {
             pOC = new PhysicsObjectComponent(physicsEngineComponent.getEngine().getObject(i));
-            pO = new GameObject(new Vector3f(), new Quaternion(), new Vector3f(physicsEngineComponent.getEngine().getObject(i).getRadius()));
-            pO.addComponent(pOC);
-            pO.addComponent(new MeshRenderer(cubeMesh, brickMaterial));
+            pO = new GameObject(pOC);
+            pO.addComponent(new MeshRenderer(sphereMesh, brickMaterial));
             addObject(pO);
         }
 
         addObject((new GameObject()).addComponent(physicsEngineComponent));
+        
+//        PhysicsTest test = new PhysicsTest();
+//        test.run();
     }
 }

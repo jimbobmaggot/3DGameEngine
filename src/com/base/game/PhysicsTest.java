@@ -66,7 +66,7 @@ public class PhysicsTest
         print(planeTest4);
         
         System.out.println("PhysicsObject Test");
-        PhysicsObject pO = new PhysicsObject(new Vector3f(0.0f, 1.0f, 0.0f), new Vector3f(1.0f, 2.0f, 3.0f), 1.0f);
+        PhysicsObject pO = new PhysicsObject(new BoundingSphere(new Vector3f(0.0f, 1.0f, 0.0f), 1.0f), new Vector3f(1.0f, 2.0f, 3.0f));
         pO.integrate(20.0f);
         
         Vector3f pOPos = pO.getPosition();
