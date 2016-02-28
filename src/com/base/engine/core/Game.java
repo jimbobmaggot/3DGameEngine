@@ -5,28 +5,27 @@ import com.base.engine.rendering.RenderingEngine;
 public abstract class Game
 {
 
-    public GameObject root;
+    private GameObject root;
 
     public void init()
     {
-
     }
 
     public void input(float delta)
     {
-        getRootObject().input(delta);
+        getRootObject().inputAll(delta);
     }
 
     public void update(float delta)
     {
-        getRootObject().update(delta);
+        getRootObject().updateAll(delta);
     }
-    
+
     public void render(RenderingEngine renderingEngine)
     {
         renderingEngine.render(getRootObject());
     }
-    
+
     public void addObject(GameObject object)
     {
         getRootObject().addChild(object);
@@ -38,7 +37,12 @@ public abstract class Game
         {
             root = new GameObject();
         }
-        
+
         return root;
+    }
+
+    public void setEngine(CoreEngine engine)
+    {
+        getRootObject().setEngine(engine);
     }
 }

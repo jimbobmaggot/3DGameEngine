@@ -1,11 +1,10 @@
 package com.base.engine.components;
 
-import com.base.engine.rendering.*;
+import com.base.engine.rendering.Material;
+import com.base.engine.rendering.Mesh;
+import com.base.engine.rendering.RenderingEngine;
+import com.base.engine.rendering.Shader;
 
-/**
- *
- * @author Stephen Rumpel
- */
 public class MeshRenderer extends GameComponent
 {
 

@@ -5,6 +5,7 @@ import com.base.engine.rendering.Window;
 
 public class CoreEngine
 {
+
     private boolean isRunning;
     private final Game game;
     private RenderingEngine renderingEngine;
@@ -19,13 +20,13 @@ public class CoreEngine
         this.width = width;
         this.height = height;
         this.frameTime = 1.0 / framerate;
+        game.setEngine(this);
     }
-    
+
     public void createWindow(String title)
     {
         Window.createWindow(width, height, title);
         this.renderingEngine = new RenderingEngine();
-        
     }
 
     public void start()
@@ -56,7 +57,7 @@ public class CoreEngine
         long frameCounter = 0;
 
         game.init();
-        
+
         double lastTime = Time.getTime();
         double unprocessedTime = 0;
 
@@ -82,10 +83,10 @@ public class CoreEngine
                     stop();
                 }
 
-                game.input((float)frameTime);
+                game.input((float) frameTime);
                 Input.update();
 
-                game.update((float)frameTime);
+                game.update((float) frameTime);
 
                 if (frameCounter >= 1.0)
                 {
@@ -119,5 +120,10 @@ public class CoreEngine
     private void cleanUp()
     {
         Window.dispose();
+    }
+
+    public RenderingEngine getRenderingEngine()
+    {
+        return renderingEngine;
     }
 }

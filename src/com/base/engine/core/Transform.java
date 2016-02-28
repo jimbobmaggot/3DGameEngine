@@ -23,6 +23,15 @@ public class Transform
         parentMatrix = new Matrix4f().initIdentity();
     }
 
+    public Transform(Vector3f pos, Quaternion rot, Vector3f scale)
+    {
+        this.pos = pos;
+        this.rot = rot;
+        this.scale = scale;
+
+        parentMatrix = new Matrix4f().initIdentity();
+    }
+
     public void update()
     {
         if (oldPos != null)
@@ -38,28 +47,55 @@ public class Transform
             oldScale = new Vector3f(0, 0, 0).set(scale).add(1.0f);
         }
     }
-    
+
     public void rotate(Vector3f axis, float angle)
     {
         rot = new Quaternion(axis, angle).mul(rot).normalized();
     }
 
+    public void rotX(float angle)
+    {
+        rot = new Quaternion(new Vector3f(1, 0, 0), angle).mul(rot).normalized();
+    }
+
+    public void rotY(float angle)
+    {
+        rot = new Quaternion(new Vector3f(0, 1, 0), angle).mul(rot).normalized();
+    }
+
+    public void rotZ(float angle)
+    {
+        rot = new Quaternion(new Vector3f(0, 0, 1), angle).mul(rot).normalized();
+    }
+
+    public void lookAt(Vector3f point, Vector3f up)
+    {
+        rot = getLookAtRotation(point, up);
+    }
+
+    public Quaternion getLookAtRotation(Vector3f point, Vector3f up)
+    {
+        return new Quaternion(new Matrix4f().initRotation(point.sub(pos).normalized(), up));
+    }
+
     public boolean hasChanged()
     {
-
         if (parent != null && parent.hasChanged())
         {
             return true;
         }
-        else if (!pos.equals(oldPos))
+
+        if (!pos.equals(oldPos))
         {
             return true;
         }
-        else if (!rot.equals(oldRot))
+
+        if (!rot.equals(oldRot))
         {
             return true;
         }
-        else if (!scale.equals(oldScale))
+
+        if (!scale.equals(oldScale))
         {
             return true;
         }
@@ -67,19 +103,12 @@ public class Transform
         return false;
     }
 
+    //Getters
     public Matrix4f getTransformation()
     {
-        Matrix4f translationMatrix = new Matrix4f().initTranslation(
-                pos.getX(),
-                pos.getY(),
-                pos.getZ());
-
+        Matrix4f translationMatrix = new Matrix4f().initTranslation(pos.getX(), pos.getY(), pos.getZ());
         Matrix4f rotationMatrix = rot.toRotationMatrix();
-
-        Matrix4f scaleMatrix = new Matrix4f().initScale(
-                scale.getX(),
-                scale.getY(),
-                scale.getZ());
+        Matrix4f scaleMatrix = new Matrix4f().initScale(scale.getX(), scale.getY(), scale.getZ());
 
         return getParentMatrix().mul(translationMatrix.mul(rotationMatrix.mul(scaleMatrix)));
     }
@@ -110,33 +139,7 @@ public class Transform
 
         return parentRotation.mul(rot);
     }
-    
-    public void rotX(float angle)
-    {
-        setRot(new Quaternion(new Vector3f(1, 0, 0), (float) Math.toRadians(angle)));
-    }
-    
-    public void rotY(float angle)
-    {
-        setRot(new Quaternion(new Vector3f(0, 1, 0), (float) Math.toRadians(angle)));
-    }
-    
-    public void rotZ(float angle)
-    {
-        setRot(new Quaternion(new Vector3f(0, 0, 1), (float) Math.toRadians(angle)));
-    }
-    
-    public void setPos(float x, float y, float z)
-    {
-        setPos(new Vector3f(x, y, z));
-    }
-    
-    public void setScale(float amt)
-    {
-        setScale(new Vector3f(amt, amt, amt));
-    }
 
-    // Getters
     public Vector3f getPos()
     {
         return pos;
@@ -153,14 +156,24 @@ public class Transform
     }
 
     // Setters
+    public void setParent(Transform parent)
+    {
+        this.parent = parent;
+    }
+
     public void setPos(Vector3f pos)
     {
         this.pos = pos;
     }
 
-    public void setRot(Quaternion rot)
+    public void setPos(float x, float y, float z)
     {
-        this.rot = rot;
+        this.pos = new Vector3f(x, y, z);
+    }
+
+    public void setRot(Quaternion rotation)
+    {
+        this.rot = rotation;
     }
 
     public void setScale(Vector3f scale)
@@ -168,8 +181,8 @@ public class Transform
         this.scale = scale;
     }
 
-    public void setParent(Transform parent)
+    public void setScale(float scale)
     {
-        this.parent = parent;
+        this.scale = new Vector3f(scale, scale, scale);
     }
 }

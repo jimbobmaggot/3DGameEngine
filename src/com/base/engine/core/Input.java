@@ -9,7 +9,7 @@ public class Input
     public static final int NUM_KEYCODES = 256;
     public static final int NUM_MOUSEBUTTONS = 5;
 
-    // All these constants come from LWJGL's Keyboard class
+    //All these constants come from LWJGL's Keyboard class
     public static final int KEY_NONE = 0x00;
     public static final int KEY_ESCAPE = 0x01;
     public static final int KEY_1 = 0x02;
@@ -111,37 +111,37 @@ public class Input
     public static final int KEY_F11 = 0x57;
     public static final int KEY_F12 = 0x58;
     public static final int KEY_F13 = 0x64;
-    /* (NEC PC98) */
+    /*                     (NEC PC98) */
     public static final int KEY_F14 = 0x65;
-    /* (NEC PC98) */
+    /*                     (NEC PC98) */
     public static final int KEY_F15 = 0x66;
-    /* (NEC PC98) */
+    /*                     (NEC PC98) */
     public static final int KEY_KANA = 0x70;
-    /* (Japanese keyboard) */
+    /* (Japanese keyboard)            */
     public static final int KEY_CONVERT = 0x79;
-    /* (Japanese keyboard) */
+    /* (Japanese keyboard)            */
     public static final int KEY_NOCONVERT = 0x7B;
-    /* (Japanese keyboard) */
+    /* (Japanese keyboard)            */
     public static final int KEY_YEN = 0x7D;
-    /* (Japanese keyboard) */
+    /* (Japanese keyboard)            */
     public static final int KEY_NUMPADEQUALS = 0x8D;
     /* = on numeric keypad (NEC PC98) */
     public static final int KEY_CIRCUMFLEX = 0x90;
-    /* (Japanese keyboard) */
+    /* (Japanese keyboard)            */
     public static final int KEY_AT = 0x91;
-    /* (NEC PC98) */
+    /*                     (NEC PC98) */
     public static final int KEY_COLON = 0x92;
-    /* (NEC PC98) */
+    /*                     (NEC PC98) */
     public static final int KEY_UNDERLINE = 0x93;
-    /* (NEC PC98) */
+    /*                     (NEC PC98) */
     public static final int KEY_KANJI = 0x94;
-    /* (Japanese keyboard) */
+    /* (Japanese keyboard)            */
     public static final int KEY_STOP = 0x95;
-    /* (NEC PC98) */
+    /*                     (NEC PC98) */
     public static final int KEY_AX = 0x96;
-    /* (Japan AX) */
+    /*                     (Japan AX) */
     public static final int KEY_UNLABELED = 0x97;
-    /* (J3100) */
+    /*                        (J3100) */
     public static final int KEY_NUMPADENTER = 0x9C;
     /* Enter on numeric keypad */
     public static final int KEY_RCONTROL = 0x9D;
@@ -201,7 +201,7 @@ public class Input
 
         for (int i = 0; i < NUM_MOUSEBUTTONS; i++)
         {
-            lastMouse[i] = getKey(i);
+            lastMouse[i] = getMouse(i);
         }
     }
 
@@ -239,12 +239,12 @@ public class Input
     {
         return new Vector2f(Mouse.getX(), Mouse.getY());
     }
-    
+
     public static void setMousePosition(Vector2f pos)
     {
-        Mouse.setCursorPosition((int)pos.getX(), (int)pos.getY());
+        Mouse.setCursorPosition((int) pos.getX(), (int) pos.getY());
     }
-    
+
     public static void setCursor(boolean enabled)
     {
         Mouse.setGrabbed(!enabled);

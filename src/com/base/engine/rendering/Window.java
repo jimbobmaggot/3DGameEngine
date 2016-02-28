@@ -1,9 +1,13 @@
 package com.base.engine.rendering;
 
 import com.base.engine.core.Vector2f;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.lwjgl.LWJGLException;
-import org.lwjgl.input.*;
-import org.lwjgl.opengl.*;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 
 public class Window
 {
@@ -18,9 +22,10 @@ public class Window
             Keyboard.create();
             Mouse.create();
         }
-        catch (LWJGLException e)
+        catch (LWJGLException ex)
         {
-            e.printStackTrace();
+            Logger.getLogger(Texture.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(1);
         }
     }
 
@@ -55,9 +60,9 @@ public class Window
     {
         return Display.getTitle();
     }
-    
+
     public Vector2f getCenter()
     {
-        return new Vector2f(getWidth()/2, getHeight()/2);
+        return new Vector2f(getWidth() / 2, getHeight() / 2);
     }
 }

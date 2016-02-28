@@ -1,33 +1,31 @@
 package com.base.engine.rendering.resourceManagement;
 
-import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL11.glGenTextures;
+import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 
-/**
- *
- * @author Stephen Rumpel
- */
-public class TextureResource 
+public class TextureResource
 {
+
     private final int id;
     private int refCount;
-    
-    public TextureResource(int id)
+
+    public TextureResource()
     {
-        this.id = id;
+        this.id = glGenTextures();
         this.refCount = 1;
     }
-    
+
     @Override
     protected void finalize()
     {
         glDeleteBuffers(id);
     }
-    
+
     public void addReference()
     {
         refCount++;
     }
-    
+
     public boolean removeReference()
     {
         refCount--;

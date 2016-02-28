@@ -2,33 +2,28 @@ package com.base.engine.rendering.meshLoading;
 
 import com.base.engine.core.Vector2f;
 import com.base.engine.core.Vector3f;
+
 import java.util.ArrayList;
 
-/**
- *
- * @author Stephen Rumpel
- */
-public class IndexedModel 
+public class IndexedModel
 {
-    public ArrayList<Vector3f> positions;
-    public ArrayList<Vector2f> textCoords;
-    public ArrayList<Vector3f> normals;
-    public ArrayList<Integer> indices;
 
-    
+    private final ArrayList<Vector3f> positions;
+    private final ArrayList<Vector2f> texCoords;
+    private final ArrayList<Vector3f> normals;
+    private final ArrayList<Integer> indices;
+
     public IndexedModel()
     {
         positions = new ArrayList<>();
-        textCoords = new ArrayList<>();
+        texCoords = new ArrayList<>();
         normals = new ArrayList<>();
         indices = new ArrayList<>();
     }
-    
+
     public void calcNormals()
     {
-        int i;
-
-        for (i = 0; i < indices.size(); i += 3)
+        for (int i = 0; i < indices.size(); i += 3)
         {
             int i0 = indices.get(i);
             int i1 = indices.get(i + 1);
@@ -44,20 +39,10 @@ public class IndexedModel
             normals.get(i2).set(normals.get(i2).add(normal));
         }
 
-        for (i = 0; i < normals.size(); i++)
+        for (int i = 0; i < normals.size(); i++)
         {
             normals.get(i).set(normals.get(i).normalized());
         }
-    }
-    
-    public ArrayList<Integer> getIndices()
-    {
-        return indices;
-    }
-
-    public ArrayList<Vector3f> getNormals()
-    {
-        return normals;
     }
 
     public ArrayList<Vector3f> getPositions()
@@ -67,7 +52,16 @@ public class IndexedModel
 
     public ArrayList<Vector2f> getTexCoords()
     {
-        return textCoords;
+        return texCoords;
     }
-    
+
+    public ArrayList<Vector3f> getNormals()
+    {
+        return normals;
+    }
+
+    public ArrayList<Integer> getIndices()
+    {
+        return indices;
+    }
 }

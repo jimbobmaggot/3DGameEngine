@@ -1,11 +1,11 @@
 package com.base.engine.core;
 
-import com.base.engine.rendering.Vertex;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 
+import com.base.engine.rendering.Vertex;
 import org.lwjgl.BufferUtils;
 
 public class Util
@@ -20,7 +20,7 @@ public class Util
     {
         return BufferUtils.createIntBuffer(size);
     }
-    
+
     public static ByteBuffer createByteBuffer(int size)
     {
         return BufferUtils.createByteBuffer(size);
@@ -39,18 +39,16 @@ public class Util
     {
         FloatBuffer buffer = createFloatBuffer(vertices.length * Vertex.SIZE);
 
-        for (int i = 0; i < vertices.length; i++)
+        for (Vertex vertex : vertices)
         {
-            buffer.put(vertices[i].getPos().getX());
-            buffer.put(vertices[i].getPos().getY());
-            buffer.put(vertices[i].getPos().getZ());
-            
-            buffer.put(vertices[i].getTexCoord().getX());
-            buffer.put(vertices[i].getTexCoord().getY());
-            
-            buffer.put(vertices[i].getNormal().getX());
-            buffer.put(vertices[i].getNormal().getY());
-            buffer.put(vertices[i].getNormal().getZ());
+            buffer.put(vertex.getPos().getX());
+            buffer.put(vertex.getPos().getY());
+            buffer.put(vertex.getPos().getZ());
+            buffer.put(vertex.getTexCoord().getX());
+            buffer.put(vertex.getTexCoord().getY());
+            buffer.put(vertex.getNormal().getX());
+            buffer.put(vertex.getNormal().getY());
+            buffer.put(vertex.getNormal().getZ());
         }
 
         buffer.flip();
@@ -79,11 +77,11 @@ public class Util
     {
         ArrayList<String> result = new ArrayList<>();
 
-        for (int i = 0; i < data.length; i++)
+        for (String string : data)
         {
-            if (!data[i].equals(""))
+            if (!string.equals(""))
             {
-                result.add(data[i]);
+                result.add(string);
             }
         }
 
@@ -99,7 +97,7 @@ public class Util
 
         for (int i = 0; i < data.length; i++)
         {
-            result[i] = data[i].intValue();
+            result[i] = data[i];
         }
 
         return result;

@@ -5,11 +5,14 @@ import com.base.engine.core.Vector3f;
 import com.base.engine.rendering.meshLoading.IndexedModel;
 import com.base.engine.rendering.meshLoading.OBJModel;
 import com.base.engine.rendering.resourceManagement.MeshResource;
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.lwjgl.opengl.GL15;
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Mesh
 {
@@ -22,7 +25,7 @@ public class Mesh
     {
         this.fileName = fileName;
         MeshResource oldResource = loadedModels.get(fileName);
-        
+
         if (oldResource != null)
         {
             resource = oldResource;
@@ -42,7 +45,7 @@ public class Mesh
 
     public Mesh(Vertex[] vertices, int[] indices, boolean calcNormals)
     {
-        this.fileName = "";
+        fileName = "";
         addVertices(vertices, indices, calcNormals);
     }
 
@@ -65,7 +68,7 @@ public class Mesh
         resource = new MeshResource(indices.length);
 
         glBindBuffer(GL_ARRAY_BUFFER, resource.getVbo());
-        glBufferData(GL_ARRAY_BUFFER, Util.createFlippedBuffer(vertices), GL_STATIC_DRAW);
+        GL15.glBufferData(GL_ARRAY_BUFFER, Util.createFlippedBuffer(vertices), GL_STATIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, resource.getIbo());
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, Util.createFlippedBuffer(indices), GL_STATIC_DRAW);
@@ -73,7 +76,6 @@ public class Mesh
 
     public void draw()
     {
-        //GL20 feature
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
         glEnableVertexAttribArray(2);
@@ -93,9 +95,7 @@ public class Mesh
 
     private void calcNormals(Vertex[] vertices, int[] indices)
     {
-        int i;
-
-        for (i = 0; i < indices.length; i += 3)
+        for (int i = 0; i < indices.length; i += 3)
         {
             int i0 = indices[i];
             int i1 = indices[i + 1];
@@ -111,13 +111,13 @@ public class Mesh
             vertices[i2].setNormal(vertices[i2].getNormal().add(normal));
         }
 
-        for (i = 0; i < vertices.length; i++)
+        for (Vertex vertex : vertices)
         {
-            vertices[i].setNormal(vertices[i].getNormal().normalized());
+            vertex.setNormal(vertex.getNormal().normalized());
         }
     }
 
-    private void loadMesh(String fileName)
+    private Mesh loadMesh(String fileName)
     {
         String[] splitArray = fileName.split("\\.");
         String ext = splitArray[splitArray.length - 1];
@@ -125,7 +125,6 @@ public class Mesh
         if (!ext.equals("obj"))
         {
             System.err.println("Error: File format not supported for mesh data: " + ext);
-            new Exception().printStackTrace();
             System.exit(1);
         }
 
@@ -137,8 +136,7 @@ public class Mesh
 
         for (int i = 0; i < model.getPositions().size(); i++)
         {
-            vertices.add(new Vertex(
-                    model.getPositions().get(i),
+            vertices.add(new Vertex(model.getPositions().get(i),
                     model.getTexCoords().get(i),
                     model.getNormals().get(i)));
         }
@@ -146,10 +144,11 @@ public class Mesh
         Vertex[] vertexData = new Vertex[vertices.size()];
         vertices.toArray(vertexData);
 
-        Integer[] indexData = new Integer[model.indices.size()];
-        model.indices.toArray(indexData);
+        Integer[] indexData = new Integer[model.getIndices().size()];
+        model.getIndices().toArray(indexData);
 
         addVertices(vertexData, Util.toIntArray(indexData), false);
 
+        return null;
     }
 }

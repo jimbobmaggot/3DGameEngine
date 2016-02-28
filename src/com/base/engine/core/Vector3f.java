@@ -7,6 +7,20 @@ public class Vector3f
     private float y;
     private float z;
 
+    public Vector3f()
+    {
+        this.x = 0.0f;
+        this.y = 0.0f;
+        this.z = 0.0f;
+    }
+
+    public Vector3f(float all)
+    {
+        this.x = all;
+        this.y = all;
+        this.z = all;
+    }
+
     public Vector3f(float x, float y, float z)
     {
         this.x = x;
@@ -22,6 +36,11 @@ public class Vector3f
     public float max()
     {
         return Math.max(x, Math.max(y, z));
+    }
+
+    public Vector3f max(Vector3f r)
+    {
+        return new Vector3f(Math.max(x, r.getX()), Math.max(y, r.getY()), Math.max(z, r.getZ()));
     }
 
     public float dot(Vector3f r)
@@ -41,8 +60,12 @@ public class Vector3f
     public Vector3f normalized()
     {
         float length = length();
+        return new Vector3f(x / length, y / length, z / length);
+    }
 
-        return new Vector3f(x /= length, y /= length, z /= length);
+    public Vector3f normalized(float length)
+    {
+        return new Vector3f(x / length, y / length, z / length);
     }
 
     public Vector3f rotate(Vector3f axis, float angle)
@@ -50,9 +73,9 @@ public class Vector3f
         float sinAngle = (float) Math.sin(-angle);
         float cosAngle = (float) Math.cos(-angle);
 
-        return this.cross(axis.mul(sinAngle)).add(              //Rotation on local X
-                (this.mul(cosAngle)).add(                       //Rotation on local Z
-                axis.mul(this.dot(axis.mul(1 - cosAngle)))));   //Rotation on local Y
+        return this.cross(axis.mul(sinAngle)).add( //Rotation on local X
+                (this.mul(cosAngle)).add( //Rotation on local Z
+                axis.mul(this.dot(axis.mul(1 - cosAngle))))); //Rotation on local Y
     }
 
     public Vector3f rotate(Quaternion rotation)
@@ -69,12 +92,6 @@ public class Vector3f
         return dest.sub(this).mul(lerpFactor).add(this);
     }
 
-    public boolean equals(Vector3f r)
-    {
-        return x == r.getX() && y == r.getY() && z == r.getZ();
-    }
-
-    // add
     public Vector3f add(Vector3f r)
     {
         return new Vector3f(x + r.getX(), y + r.getY(), z + r.getZ());
@@ -85,7 +102,6 @@ public class Vector3f
         return new Vector3f(x + r, y + r, z + r);
     }
 
-    // subtract
     public Vector3f sub(Vector3f r)
     {
         return new Vector3f(x - r.getX(), y - r.getY(), z - r.getZ());
@@ -96,7 +112,6 @@ public class Vector3f
         return new Vector3f(x - r, y - r, z - r);
     }
 
-    // multiply
     public Vector3f mul(Vector3f r)
     {
         return new Vector3f(x * r.getX(), y * r.getY(), z * r.getZ());
@@ -107,7 +122,6 @@ public class Vector3f
         return new Vector3f(x * r, y * r, z * r);
     }
 
-    // divide
     public Vector3f div(Vector3f r)
     {
         return new Vector3f(x / r.getX(), y / r.getY(), z / r.getZ());
@@ -123,40 +137,15 @@ public class Vector3f
         return new Vector3f(Math.abs(x), Math.abs(y), Math.abs(z));
     }
 
-    public Vector3f set(float x, float y, float z)
-    {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        return this;
-    }
-    
-    public Vector3f set(Vector3f r)
-    {
-        set(r.getX(), r.getY(), r.getZ());
-        return this;
-    }
-
     @Override
     public String toString()
     {
         return "(" + x + " " + y + " " + z + ")";
     }
 
-    // Swizzling
     public Vector2f getXY()
     {
         return new Vector2f(x, y);
-    }
-
-    public Vector2f getXZ()
-    {
-        return new Vector2f(x, z);
-    }
-
-    public Vector2f getYX()
-    {
-        return new Vector2f(y, x);
     }
 
     public Vector2f getYZ()
@@ -169,15 +158,43 @@ public class Vector3f
         return new Vector2f(z, x);
     }
 
+    public Vector2f getYX()
+    {
+        return new Vector2f(y, x);
+    }
+
     public Vector2f getZY()
     {
         return new Vector2f(z, y);
     }
 
-    // Getters
+    public Vector2f getXZ()
+    {
+        return new Vector2f(x, z);
+    }
+
+    public Vector3f set(float x, float y, float z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        return this;
+    }
+
+    public Vector3f set(Vector3f r)
+    {
+        set(r.getX(), r.getY(), r.getZ());
+        return this;
+    }
+
     public float getX()
     {
         return x;
+    }
+
+    public void setX(float x)
+    {
+        this.x = x;
     }
 
     public float getY()
@@ -185,24 +202,23 @@ public class Vector3f
         return y;
     }
 
-    public float getZ()
-    {
-        return z;
-    }
-
-    // Setters
-    public void setX(float x)
-    {
-        this.x = x;
-    }
-
     public void setY(float y)
     {
         this.y = y;
     }
 
+    public float getZ()
+    {
+        return z;
+    }
+
     public void setZ(float z)
     {
         this.z = z;
+    }
+
+    public boolean equals(Vector3f r)
+    {
+        return x == r.getX() && y == r.getY() && z == r.getZ();
     }
 }

@@ -3,11 +3,15 @@ package com.base.engine.rendering.meshLoading;
 import com.base.engine.core.Util;
 import com.base.engine.core.Vector2f;
 import com.base.engine.core.Vector3f;
+import com.base.engine.rendering.Texture;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class OBJModel
 {
@@ -28,7 +32,7 @@ public class OBJModel
         hasTexCoords = false;
         hasNormals = false;
 
-        BufferedReader meshReader = null;
+        BufferedReader meshReader;
 
         try
         {
@@ -40,43 +44,44 @@ public class OBJModel
                 String[] tokens = line.split(" ");
                 tokens = Util.removeEmptyStrings(tokens);
 
-                if (tokens.length == 0 || tokens[0].equals("#"))
+                switch (tokens[0])
                 {
-                    continue;
-                }
-                else if (tokens[0].equals("v"))
-                {
-                    positions.add(new Vector3f(Float.valueOf(tokens[1]),
-                            Float.valueOf(tokens[2]),
-                            Float.valueOf(tokens[3])));
-                }
-                else if (tokens[0].equals("vt"))
-                {
-                    texCoords.add(new Vector2f(Float.valueOf(tokens[1]),
-                            Float.valueOf(tokens[2])));
-                }
-                else if (tokens[0].equals("vn"))
-                {
-                    normals.add(new Vector3f(Float.valueOf(tokens[1]),
-                            Float.valueOf(tokens[2]),
-                            Float.valueOf(tokens[3])));
-                }
-                else if (tokens[0].equals("f"))
-                {
-                    for (int i = 0; i < tokens.length - 3; i++)
-                    {
-                        indices.add(parseOBJIndex(tokens[1]));
-                        indices.add(parseOBJIndex(tokens[2 + i]));
-                        indices.add(parseOBJIndex(tokens[3 + i]));
-                    }
+                    case "v":
+                        positions.add(new Vector3f(Float.valueOf(tokens[1]),
+                                Float.valueOf(tokens[2]),
+                                Float.valueOf(tokens[3])));
+                        break;
+                        
+                    case "vt":
+                        texCoords.add(new Vector2f(Float.valueOf(tokens[1]),
+                                Float.valueOf(tokens[2])));
+                        break;
+                        
+                    case "vn":
+                        normals.add(new Vector3f(Float.valueOf(tokens[1]),
+                                Float.valueOf(tokens[2]),
+                                Float.valueOf(tokens[3])));
+                        break;
+                        
+                    case "f":
+                        for (int i = 0; i < tokens.length - 3; i++)
+                        {
+                            indices.add(parseOBJIndex(tokens[1]));
+                            indices.add(parseOBJIndex(tokens[2 + i]));
+                            indices.add(parseOBJIndex(tokens[3 + i]));
+                        }
+                        break;
+                        
+                    default:
+                        break;
                 }
             }
 
             meshReader.close();
         }
-        catch (Exception e)
+        catch (IOException ex)
         {
-            e.printStackTrace();
+            Logger.getLogger(Texture.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
         }
     }
@@ -105,6 +110,7 @@ public class OBJModel
             {
                 currentTexCoord = new Vector2f(0, 0);
             }
+
             if (hasNormals)
             {
                 currentNormal = normals.get(currentIndex.normalIndex);
@@ -168,37 +174,16 @@ public class OBJModel
 
         if (values.length > 1)
         {
-            if (!values[1].isEmpty())
-            {
-                hasTexCoords = true;
-                result.texCoordIndex = Integer.parseInt(values[1]) - 1;
-            }
+            hasTexCoords = true;
+            result.texCoordIndex = Integer.parseInt(values[1]) - 1;
+
             if (values.length > 2)
             {
                 hasNormals = true;
                 result.normalIndex = Integer.parseInt(values[2]) - 1;
             }
         }
+
         return result;
-    }
-
-    public ArrayList<Vector3f> getPositions()
-    {
-        return positions;
-    }
-
-    public ArrayList<Vector2f> getTexCoords()
-    {
-        return texCoords;
-    }
-
-    public ArrayList<Vector3f> getNormals()
-    {
-        return normals;
-    }
-
-    public ArrayList<OBJIndex> getIndices()
-    {
-        return indices;
     }
 }

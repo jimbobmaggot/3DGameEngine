@@ -27,24 +27,21 @@ public class Vector2f
         return x * r.getX() + y * r.getY();
     }
 
-    public Vector2f normalize()
+    public Vector2f normalized()
     {
         float length = length();
 
-        return new Vector2f(x /= length, y /= length);
+        return new Vector2f(x / length, y / length);
     }
 
-    public Vector2f set(float x, float y)
+    public float cross(Vector2f r)
     {
-        this.x = x;
-        this.y = y;
-        return this;
+        return x * r.getY() - y * r.getX();
     }
 
-    public Vector2f set(Vector3f r)
+    public Vector2f lerp(Vector2f dest, float lerpFactor)
     {
-        set(r.getX(), r.getY());
-        return this;
+        return dest.sub(this).mul(lerpFactor).add(this);
     }
 
     public Vector2f rotate(float angle)
@@ -56,12 +53,6 @@ public class Vector2f
         return new Vector2f((float) (x * cos - y * sin), (float) (x * sin + y * cos));
     }
 
-    public Vector2f lerp(Vector2f dest, float lerpFactor)
-    {
-        return dest.sub(this).mul(lerpFactor).add(this);
-    }
-
-    // add
     public Vector2f add(Vector2f r)
     {
         return new Vector2f(x + r.getX(), y + r.getY());
@@ -72,7 +63,6 @@ public class Vector2f
         return new Vector2f(x + r, y + r);
     }
 
-    // subract
     public Vector2f sub(Vector2f r)
     {
         return new Vector2f(x - r.getX(), y - r.getY());
@@ -83,7 +73,6 @@ public class Vector2f
         return new Vector2f(x - r, y - r);
     }
 
-    // multiply
     public Vector2f mul(Vector2f r)
     {
         return new Vector2f(x * r.getX(), y * r.getY());
@@ -94,7 +83,6 @@ public class Vector2f
         return new Vector2f(x * r, y * r);
     }
 
-    // divide
     public Vector2f div(Vector2f r)
     {
         return new Vector2f(x / r.getX(), y / r.getY());
@@ -110,26 +98,33 @@ public class Vector2f
         return new Vector2f(Math.abs(x), Math.abs(y));
     }
 
-    public float cross(Vector2f r)
-    {
-        return x * r.getY() - y * r.getX();
-    }
-
-    public boolean equals(Vector2f r)
-    {
-        return x == r.getX() && y == r.getY();
-    }
-
     @Override
     public String toString()
     {
         return "(" + x + " " + y + ")";
     }
 
-    // Getters
+    public Vector2f set(float x, float y)
+    {
+        this.x = x;
+        this.y = y;
+        return this;
+    }
+
+    public Vector2f set(Vector2f r)
+    {
+        set(r.getX(), r.getY());
+        return this;
+    }
+
     public float getX()
     {
         return x;
+    }
+
+    public void setX(float x)
+    {
+        this.x = x;
     }
 
     public float getY()
@@ -137,14 +132,13 @@ public class Vector2f
         return y;
     }
 
-    // Setters
-    public void setX(float x)
-    {
-        this.x = x;
-    }
-
     public void setY(float y)
     {
         this.y = y;
+    }
+
+    public boolean equals(Vector2f r)
+    {
+        return x == r.getX() && y == r.getY();
     }
 }
